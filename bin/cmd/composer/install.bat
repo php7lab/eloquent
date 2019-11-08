@@ -1,0 +1,3 @@
+cd ../../..
+composer install
+pause

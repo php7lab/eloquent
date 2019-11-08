@@ -30,17 +30,15 @@ class SourceRepository
 
     private static function scanDir($dir)
     {
-        $srcDir = self::getRootPath() . 'src/';
-        $files = FileHelper::scanDir($srcDir . $dir);
+        $files = FileHelper::scanDir($dir);
         $classes = [];
         foreach ($files as $file) {
             $classNameClean = FileHelper::fileRemoveExt($file);
-            $className = 'App\\' . $dir . '\\' . $classNameClean;
-            //$classes[$classNameClean] = $className;
-
             $entity = new MigrationEntity;
+            $entity->className = 'Migrations\\' . $classNameClean;
+            $entity->fileName = $dir . '\\' . $classNameClean . '.php';
             $entity->version = $classNameClean;
-            $entity->className = $className;
+            include_once($entity->fileName);
             $classes[] = $entity;
         }
         return $classes;
