@@ -9,7 +9,7 @@ use PhpLab\Domain\Repository\BaseRepository;
 use PhpLab\Eloquent\Db\Helper\Manager;
 use PhpLab\Eloquent\Db\Traits\TableNameTrait;
 
-abstract class BaseDbRepository extends BaseRepository
+abstract class BaseEloquentRepository extends BaseRepository
 {
 
     use TableNameTrait;

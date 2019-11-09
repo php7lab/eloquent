@@ -11,7 +11,7 @@ use PhpLab\Domain\Interfaces\CrudRepositoryInterface;
 use PhpLab\Eloquent\Db\Helper\QueryBuilderHelper;
 use PhpLab\Eloquent\Db\Helper\QueryFilter;
 
-abstract class BaseDbCrudRepository extends BaseDbRepository implements CrudRepositoryInterface
+abstract class BaseEloquentCrudRepository extends BaseEloquentRepository implements CrudRepositoryInterface
 {
 
     public function relations()

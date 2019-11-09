@@ -5,13 +5,13 @@ namespace PhpLab\Eloquent\Migration\Repository;
 use Illuminate\Database\Schema\Blueprint;
 use php7extension\core\common\helpers\ClassHelper;
 use php7extension\yii\helpers\ArrayHelper;
-use PhpLab\Eloquent\Db\Repository\BaseDbRepository;
+use PhpLab\Eloquent\Db\Repository\BaseEloquentRepository;
 use PhpLab\Eloquent\Migration\Base\BaseCreateTableMigration;
 use PhpLab\Eloquent\Migration\Entity\MigrationEntity;
 
 //use PhpLab\Eloquent\Db\Helper\TableAliasHelper;
 
-class HistoryRepository extends BaseDbRepository
+class HistoryRepository extends BaseEloquentRepository
 {
 
     const MIGRATION_TABLE_NAME = 'eq_migration';
