@@ -4,9 +4,7 @@ namespace PhpLab\Eloquent\Migration\Command;
 
 use PhpLab\Eloquent\Migration\Entity\MigrationEntity;
 use PhpLab\Eloquent\Migration\Service\MigrationService;
-use php7extension\core\console\helpers\Output;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -35,13 +33,15 @@ abstract class BaseCommand extends Command
             );
     }
 
-    protected function showClasses($classes) {
+    protected function showClasses($classes)
+    {
 
     }
 
-    protected function isContinueQuestion(string $question, InputInterface $input, OutputInterface $output) : bool {
+    protected function isContinueQuestion(string $question, InputInterface $input, OutputInterface $output): bool
+    {
         $withConfirm = $input->getOption('withConfirm');
-        if( ! $withConfirm) {
+        if (!$withConfirm) {
             return true;
         }
         $helper = $this->getHelper('question');
@@ -49,10 +49,11 @@ abstract class BaseCommand extends Command
         return $helper->ask($input, $output, $question);
     }
 
-    protected function runMigrate($collection, $method, $outputInfoCallback) {
+    protected function runMigrate($collection, $method, $outputInfoCallback)
+    {
         /** @var MigrationEntity[] $collection */
         foreach ($collection as $migrationEntity) {
-            if($method == 'up') {
+            if ($method == 'up') {
                 $this->migrationService->upMigration($migrationEntity);
             } else {
                 $this->migrationService->downMigration($migrationEntity);

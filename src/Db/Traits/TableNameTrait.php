@@ -2,8 +2,6 @@
 
 namespace PhpLab\Eloquent\Db\Traits;
 
-use PhpLab\Eloquent\Db\Helper\Manager;
-
 trait TableNameTrait
 {
 
@@ -22,7 +20,7 @@ trait TableNameTrait
         return $this->encodeTableName($this->tableName);
     }
 
-    public function encodeTableName(string $sourceTableName) : string
+    public function encodeTableName(string $sourceTableName): string
     {
         $tableAlias = $this->getCapsule()->getAlias();
         $targetTableName = $tableAlias->encode($this->connectionName(), $sourceTableName);

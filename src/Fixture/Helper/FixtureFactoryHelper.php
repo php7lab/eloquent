@@ -32,7 +32,7 @@ class FixtureFactoryHelper
         $this->step = $step;
     }
 
-    public function getCount() : int
+    public function getCount(): int
     {
         return $this->count;
     }
@@ -42,7 +42,7 @@ class FixtureFactoryHelper
         $this->count = $count;
     }
 
-    public function getCallback() : Closure
+    public function getCallback(): Closure
     {
         return $this->callback;
     }
@@ -57,11 +57,13 @@ class FixtureFactoryHelper
         $this->count = $count;
     }*/
 
-    public function ordIndex($index, $count) {
+    public function ordIndex($index, $count)
+    {
         return ($index + $count - 1) % $count + 1;
     }
 
-    public function generateCollection() {
+    public function generateCollection()
+    {
         $collection = [];
         for ($index = $this->startIndex; $index <= $this->count; $index = $index + $this->step) {
             $collection[] = $this->generateItem($index);
@@ -69,7 +71,8 @@ class FixtureFactoryHelper
         return $collection;
     }
 
-    public function generateItem($index) {
+    public function generateItem($index)
+    {
         return call_user_func_array($this->callback, [$index, $this]);
     }
 

@@ -17,7 +17,6 @@ class DownCommand extends BaseCommand
         $this
             // the short description shown while running "php bin/console list"
             ->setDescription('Migration down')
-
             // the full command description shown when running the command with
             // the "--help" option
             ->setHelp('This command down all migrations...');
@@ -28,13 +27,13 @@ class DownCommand extends BaseCommand
         $output->writeln(['<fg=white># Migrate DOWN</>']);
 
         $historyCollection = $this->migrationService->allForDown();
-        if(empty($historyCollection)) {
+        if (empty($historyCollection)) {
             $output->writeln(['', '<fg=magenta>- No applied migrations found! -</>', '']);
             return;
         }
 
         $withConfirm = $input->getOption('withConfirm');
-        if($withConfirm) {
+        if ($withConfirm) {
             $versionArray = ArrayHelper::getColumn($historyCollection, 'version');
             $versionArray = array_values($versionArray);
             Output::line();
@@ -42,7 +41,7 @@ class DownCommand extends BaseCommand
             Output::line();
         }
 
-        if ( ! $this->isContinueQuestion('Down migrations?', $input, $output)) {
+        if (!$this->isContinueQuestion('Down migrations?', $input, $output)) {
             return;
         }
 

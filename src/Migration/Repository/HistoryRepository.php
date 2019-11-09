@@ -2,17 +2,14 @@
 
 namespace PhpLab\Eloquent\Migration\Repository;
 
-use PhpLab\Eloquent\Db\Enum\DbDriverEnum;
-use PhpLab\Eloquent\Db\Helper\ManagerFactory;
-//use PhpLab\Eloquent\Db\Helper\TableAliasHelper;
-use PhpLab\Eloquent\Db\Repository\BaseDbRepository;
-use PhpLab\Eloquent\Migration\Entity\MigrationEntity;
-use PhpLab\Eloquent\Migration\Base\BaseCreateTableMigration;
-use Illuminate\Database\Capsule\Manager;
 use Illuminate\Database\Schema\Blueprint;
 use php7extension\core\common\helpers\ClassHelper;
 use php7extension\yii\helpers\ArrayHelper;
-use php7extension\yii\helpers\FileHelper;
+use PhpLab\Eloquent\Db\Repository\BaseDbRepository;
+use PhpLab\Eloquent\Migration\Base\BaseCreateTableMigration;
+use PhpLab\Eloquent\Migration\Entity\MigrationEntity;
+
+//use PhpLab\Eloquent\Db\Helper\TableAliasHelper;
 
 class HistoryRepository extends BaseDbRepository
 {
@@ -21,7 +18,8 @@ class HistoryRepository extends BaseDbRepository
 
     protected $tableName = self::MIGRATION_TABLE_NAME;
 
-    public static function filterVersion(array $sourceCollection, array $historyCollection) {
+    public static function filterVersion(array $sourceCollection, array $historyCollection)
+    {
         /**
          * @var MigrationEntity[] $historyCollection
          * @var MigrationEntity[] $sourceCollection
@@ -33,18 +31,17 @@ class HistoryRepository extends BaseDbRepository
         $diff = array_diff($sourceVersionArray, $historyVersionArray);
 
         foreach ($sourceCollection as $key => $migrationEntity) {
-            if( ! in_array($migrationEntity->version, $diff)) {
+            if (!in_array($migrationEntity->version, $diff)) {
                 unset($sourceCollection[$key]);
             }
         }
         return $sourceCollection;
     }
 
-    private function insert($version, $connectionName = 'default') {
+    private function insert($version, $connectionName = 'default')
+    {
         $tableAlias = $this->getCapsule()->getAlias();
         $targetTableName = $tableAlias->encode($connectionName, self::MIGRATION_TABLE_NAME);
-        //$queryBuilder = $this->getQueryBuilder();
-        //$queryBuilder = Manager::table($targetTableName, null, $connectionName);
         $queryBuilder = $this->getQueryBuilder();
         $queryBuilder->insert([
             'version' => $version,
@@ -52,16 +49,17 @@ class HistoryRepository extends BaseDbRepository
         ]);
     }
 
-    private function delete($version, $connectionName = 'default') {
+    private function delete($version, $connectionName = 'default')
+    {
         $tableAlias = $this->getCapsule()->getAlias();
         $targetTableName = $tableAlias->encode($connectionName, self::MIGRATION_TABLE_NAME);
-        //$queryBuilder = Manager::table($targetTableName, null, $connectionName);
         $queryBuilder = $this->getQueryBuilder();
         $queryBuilder->where('version', $version);
         $queryBuilder->delete();
     }
 
-    public function upMigration($class) {
+    public function upMigration($class)
+    {
         /** @var BaseCreateTableMigration $migration */
         $migration = new $class;
         $schema = $this->getSchema();
@@ -75,7 +73,8 @@ class HistoryRepository extends BaseDbRepository
         // todo: end transaction
     }
 
-    public function downMigration($class) {
+    public function downMigration($class)
+    {
         /** @var BaseCreateTableMigration $migration */
         $migration = new $class;
         $schema = $this->getSchema();
@@ -89,10 +88,9 @@ class HistoryRepository extends BaseDbRepository
         // todo: end transaction
     }
 
-    public function all($connectionName = 'default') {
+    public function all($connectionName = 'default')
+    {
         $this->forgeMigrationTable($connectionName);
-        //$targetTableName = TableAliasHelper::encode($connectionName, self::MIGRATION_TABLE_NAME);
-        //$queryBuilder = Manager::table($targetTableName, null, $connectionName);
         $queryBuilder = $this->getQueryBuilder();
         $array = $queryBuilder->get()->toArray();
         $collection = [];
@@ -105,19 +103,20 @@ class HistoryRepository extends BaseDbRepository
         return $collection;
     }
 
-    private function forgeMigrationTable($connectionName = 'default') {
-        //ManagerFactory::forgeDb($connectionName);
+    private function forgeMigrationTable($connectionName = 'default')
+    {
         $schema = $this->getSchema($connectionName);
         $tableAlias = $this->getCapsule()->getAlias();
         $targetTableName = $tableAlias->encode($connectionName, self::MIGRATION_TABLE_NAME);
         $hasTable = $schema->hasTable($targetTableName);
-        if($hasTable) {
+        if ($hasTable) {
             return;
         }
         $this->createMigrationTable($connectionName);
     }
 
-    private function createMigrationTable($connectionName = 'default') {
+    private function createMigrationTable($connectionName = 'default')
+    {
         $tableSchema = function (Blueprint $table) {
             $table->string('version')->primary();
             $table->timestamp('executed_at');

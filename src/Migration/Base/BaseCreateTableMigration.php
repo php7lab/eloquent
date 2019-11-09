@@ -2,8 +2,8 @@
 
 namespace PhpLab\Eloquent\Migration\Base;
 
+use Illuminate\Database\Schema\Builder;
 use PhpLab\Eloquent\Db\Enum\DbDriverEnum;
-use \Illuminate\Database\Schema\Builder;
 
 abstract class BaseCreateTableMigration extends BaseMigration
 {
@@ -15,7 +15,7 @@ abstract class BaseCreateTableMigration extends BaseMigration
     public function up(Builder $schema)
     {
         $schema->create($this->tableName(), $this->tableSchema());
-        if($this->tableComment) {
+        if ($this->tableComment) {
             $this->addTableComment($schema);
         }
     }
@@ -25,19 +25,20 @@ abstract class BaseCreateTableMigration extends BaseMigration
         $schema->dropIfExists($this->tableName());
     }
 
-    private function addTableComment(Builder $schema) {
+    private function addTableComment(Builder $schema)
+    {
         $connection = $schema->getConnection();
         $driver = $connection->getConfig('driver');
         $table = $this->tableName();
         $tableComment = $this->tableComment;
         $sql = '';
-        if($driver == DbDriverEnum::MYSQL) {
+        if ($driver == DbDriverEnum::MYSQL) {
             $sql = "ALTER TABLE {$table} COMMENT = '{$tableComment}';";
         }
-        if($driver == DbDriverEnum::PGSQL) {
+        if ($driver == DbDriverEnum::PGSQL) {
             $sql = "COMMENT ON TABLE {$table} IS '{$tableComment}';";
         }
-        if($sql) {
+        if ($sql) {
             $this->runSqlQuery($schema, $sql);
         }
     }

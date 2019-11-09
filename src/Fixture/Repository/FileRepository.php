@@ -2,14 +2,12 @@
 
 namespace PhpLab\Eloquent\Fixture\Repository;
 
-use PhpLab\Domain\Data\Collection;
-use PhpLab\Domain\Repository\BaseRepository;
-use PhpLab\Eloquent\Db\Helper\Manager;
-use PhpLab\Eloquent\Db\Helper\ManagerFactory;
-use PhpLab\Eloquent\Fixture\Entity\FixtureEntity;
 use php7extension\core\store\StoreFile;
 use php7extension\yii\helpers\ArrayHelper;
 use php7extension\yii\helpers\FileHelper;
+use PhpLab\Domain\Data\Collection;
+use PhpLab\Domain\Repository\BaseRepository;
+use PhpLab\Eloquent\Fixture\Entity\FixtureEntity;
 use PhpLab\Eloquent\Fixture\Traits\ConfigTrait;
 
 class FileRepository extends BaseRepository
@@ -26,7 +24,7 @@ class FileRepository extends BaseRepository
         $this->config = $config['fixture'];
     }
 
-    public function allTables() : Collection
+    public function allTables(): Collection
     {
         $array = [];
         foreach ($this->config['directory'] as $dir) {
@@ -43,16 +41,17 @@ class FileRepository extends BaseRepository
         $this->getStoreInstance($name)->save($data);
     }
 
-    public function loadData($name) : Collection
+    public function loadData($name): Collection
     {
         $data = $this->getStoreInstance($name)->load();
         return new Collection($data);
     }
 
-    private function oneByName(string $name) : FixtureEntity {
+    private function oneByName(string $name): FixtureEntity
+    {
         $collection = $this->allTables();
         $collection = $collection->where('name', '=', $name);
-        if($collection->count() < 1) {
+        if ($collection->count() < 1) {
             return $this->forgeEntity([
                 'name' => $name,
                 'fileName' => $this->config['directory']['default'] . '/' . $name . '.' . $this->extension,
@@ -62,13 +61,14 @@ class FileRepository extends BaseRepository
         return $this->forgeEntity($collection->first());
     }
 
-    private function getStoreInstance(string $name) : StoreFile {
+    private function getStoreInstance(string $name): StoreFile
+    {
         $entity = $this->oneByName($name);
         $store = new StoreFile($entity->fileName);
         return $store;
     }
 
-    private function scanDir($dir) : array
+    private function scanDir($dir): array
     {
         $files = FileHelper::scanDir($dir);
         $array = [];

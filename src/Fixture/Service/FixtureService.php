@@ -22,38 +22,45 @@ class FixtureService
         $this->fileRepository = $fileRepository;
     }
 
-    public function allForDelete() {
+    public function allForDelete()
+    {
         $collection = $this->dbRepository->allTables();
         return $collection;
     }
 
-    public function allFixtures() {
+    public function allFixtures()
+    {
         $collection = $this->fileRepository->allTables();
         return $this->filterByExclude($collection);
     }
 
-    public function allTables() : Collection {
+    public function allTables(): Collection
+    {
         $collection = $this->dbRepository->allTables();
         return $this->filterByExclude($collection);
     }
 
-    public function dropTable($name) {
+    public function dropTable($name)
+    {
         $this->dbRepository->deleteTable($name);
     }
 
-    public function importTable($name) {
+    public function importTable($name)
+    {
         $data = $this->fileRepository->loadData($name);
         $this->dbRepository->saveData($name, $data);
     }
 
-    public function exportTable($name) {
+    public function exportTable($name)
+    {
         $collection = $this->dbRepository->loadData($name);
-        if($collection->count()) {
+        if ($collection->count()) {
             $this->fileRepository->saveData($name, $collection);
         }
     }
 
-    private function filterByExclude(Collection $collection) {
+    private function filterByExclude(Collection $collection)
+    {
         $excludeNames = $this->excludeNames;
         return $collection->whereNotIn('name', $excludeNames);
     }

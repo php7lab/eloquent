@@ -2,10 +2,10 @@
 
 namespace PhpLab\Eloquent\Migration\Repository;
 
-use PhpLab\Eloquent\Fixture\Traits\ConfigTrait;
-use PhpLab\Eloquent\Migration\Entity\MigrationEntity;
 use php7extension\yii\helpers\ArrayHelper;
 use php7extension\yii\helpers\FileHelper;
+use PhpLab\Eloquent\Fixture\Traits\ConfigTrait;
+use PhpLab\Eloquent\Migration\Entity\MigrationEntity;
 
 class SourceRepository
 {
@@ -28,7 +28,6 @@ class SourceRepository
         }
         return $classes;
     }
-
 
 
     private static function scanDir($dir)

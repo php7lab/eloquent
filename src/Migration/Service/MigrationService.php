@@ -2,10 +2,10 @@
 
 namespace PhpLab\Eloquent\Migration\Service;
 
+use php7extension\yii\helpers\ArrayHelper;
 use PhpLab\Eloquent\Migration\Entity\MigrationEntity;
 use PhpLab\Eloquent\Migration\Repository\HistoryRepository;
 use PhpLab\Eloquent\Migration\Repository\SourceRepository;
-use php7extension\yii\helpers\ArrayHelper;
 
 class MigrationService
 {
@@ -19,15 +19,18 @@ class MigrationService
         $this->historyRepository = $historyRepository;
     }
 
-    public function upMigration(MigrationEntity $migrationEntity) {
+    public function upMigration(MigrationEntity $migrationEntity)
+    {
         $this->historyRepository->upMigration($migrationEntity->className);
     }
 
-    public function downMigration(MigrationEntity $migrationEntity) {
+    public function downMigration(MigrationEntity $migrationEntity)
+    {
         $this->historyRepository->downMigration($migrationEntity->className);
     }
 
-    public function allForUp() {
+    public function allForUp()
+    {
         /*
          * читать коллекцию из БД
          * читать коллекцию классов
@@ -43,7 +46,8 @@ class MigrationService
         return $filteredCollection;
     }
 
-    public function allForDown() {
+    public function allForDown()
+    {
         /**
          * @var MigrationEntity[] $historyCollection
          * @var MigrationEntity[] $sourceCollection

@@ -2,11 +2,10 @@
 
 namespace PhpLab\Eloquent\Db\Command;
 
-use PhpLab\Domain\Data\Collection;
-use PhpLab\Eloquent\Fixture\Entity\FixtureEntity;
-use php7extension\core\console\helpers\input\Select;
 use php7extension\core\console\helpers\Output;
 use php7extension\yii\helpers\ArrayHelper;
+use PhpLab\Domain\Data\Collection;
+use PhpLab\Eloquent\Fixture\Entity\FixtureEntity;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -20,7 +19,6 @@ class DeleteAllTablesCommand extends BaseCommand
         $this
             // the short description shown while running "php bin/console list"
             ->setDescription('Delete all tables')
-
             // the full command description shown when running the command with
             // the "--help" option
             ->setHelp('...');
@@ -33,13 +31,13 @@ class DeleteAllTablesCommand extends BaseCommand
         /** @var FixtureEntity[]|Collection $tableCollection */
         $tableCollection = $this->fixtureService->allForDelete();
 
-        if(empty($tableCollection->count())) {
+        if (empty($tableCollection->count())) {
             $output->writeln(['', '<fg=magenta>- No tables -</>', '']);
             return;
         }
 
         $withConfirm = $input->getOption('withConfirm');
-        if($withConfirm) {
+        if ($withConfirm) {
             $versionArray = ArrayHelper::getColumn($tableCollection, 'name');
             $versionArray = array_values($versionArray);
             Output::line();
@@ -47,7 +45,7 @@ class DeleteAllTablesCommand extends BaseCommand
             Output::line();
         }
 
-        if ( ! $this->isContinueQuestion('Sure DELETE all tables?', $input, $output)) {
+        if (!$this->isContinueQuestion('Sure DELETE all tables?', $input, $output)) {
             return;
         }
 

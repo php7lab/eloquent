@@ -2,11 +2,6 @@
 
 namespace PhpLab\Eloquent\Db\Helper;
 
-use PhpLab\Eloquent\Db\Enum\DbDriverEnum;
-use Illuminate\Database\Capsule\Manager;
-use php7extension\yii\helpers\ArrayHelper;
-use php7extension\yii\helpers\FileHelper;
-
 class ManagerFactory
 {
 

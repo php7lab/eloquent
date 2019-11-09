@@ -17,7 +17,6 @@ class UpCommand extends BaseCommand
         $this
             // the short description shown while running "php bin/console list"
             ->setDescription('Migration up')
-
             // the full command description shown when running the command with
             // the "--help" option
             ->setHelp('This command up all migrations...');
@@ -28,13 +27,13 @@ class UpCommand extends BaseCommand
         $output->writeln(['<fg=white># Migrate UP</>']);
 
         $filteredCollection = $this->migrationService->allForUp();
-        if(empty($filteredCollection)) {
+        if (empty($filteredCollection)) {
             $output->writeln(['', '<fg=magenta>- Migrations up to date! -</>', '']);
             return;
         }
 
         $withConfirm = $input->getOption('withConfirm');
-        if($withConfirm) {
+        if ($withConfirm) {
             $versionArray = ArrayHelper::getColumn($filteredCollection, 'version');
             $versionArray = array_values($versionArray);
             Output::line();
@@ -42,7 +41,7 @@ class UpCommand extends BaseCommand
             Output::line();
         }
 
-        if ( ! $this->isContinueQuestion('Apply migrations?', $input, $output)) {
+        if (!$this->isContinueQuestion('Apply migrations?', $input, $output)) {
             return;
         }
 

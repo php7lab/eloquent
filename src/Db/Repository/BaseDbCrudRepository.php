@@ -2,30 +2,32 @@
 
 namespace PhpLab\Eloquent\Db\Repository;
 
-use PhpLab\Domain\Interfaces\CrudRepositoryInterface;
-use PhpLab\Eloquent\Db\Helper\QueryBuilderHelper;
-use PhpLab\Eloquent\Db\Helper\QueryFilter;
 use php7extension\core\exceptions\NotFoundException;
 use php7extension\core\helpers\ClassHelper;
 use php7extension\yii\helpers\ArrayHelper;
 use php7rails\domain\BaseEntityWithId;
 use php7rails\domain\data\Query;
+use PhpLab\Domain\Interfaces\CrudRepositoryInterface;
+use PhpLab\Eloquent\Db\Helper\QueryBuilderHelper;
+use PhpLab\Eloquent\Db\Helper\QueryFilter;
 
 abstract class BaseDbCrudRepository extends BaseDbRepository implements CrudRepositoryInterface
 {
 
-    public function relations() {
+    public function relations()
+    {
         return [];
     }
 
-    protected function queryFilterInstance(Query $query = null) {
+    protected function queryFilterInstance(Query $query = null)
+    {
         $query = Query::forge($query);
         /** @var QueryFilter $queryFilter */
         $queryFilter = new QueryFilter($this, $query);
         return $queryFilter;
     }
 
-    public function count(Query $query = null) : int
+    public function count(Query $query = null): int
     {
         $query = Query::forge($query);
         $queryBuilder = $this->getQueryBuilder();
@@ -67,7 +69,7 @@ abstract class BaseDbCrudRepository extends BaseDbRepository implements CrudRepo
     {
         $query->limit(1);
         $collection = $this->all($query);
-        if($collection->count() < 1) {
+        if ($collection->count() < 1) {
             throw new NotFoundException('Not found entity!');
         }
         return $collection->first();
@@ -84,10 +86,11 @@ abstract class BaseDbCrudRepository extends BaseDbRepository implements CrudRepo
         $entity->id = $lastId;
     }
 
-    private function getColumnsForModify() {
+    private function getColumnsForModify()
+    {
         $schema = $this->getSchema();
         $columnList = $schema->getColumnListing($this->tableName());
-        if($this->autoIncrement()) {
+        if ($this->autoIncrement()) {
             ArrayHelper::removeByValue($this->autoIncrement(), $columnList);
         }
         return $columnList;
