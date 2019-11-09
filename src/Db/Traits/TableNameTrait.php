@@ -2,13 +2,15 @@
 
 namespace PhpLab\Eloquent\Db\Traits;
 
-use PhpLab\Eloquent\Db\Helper\TableAliasHelper;
+use PhpLab\Eloquent\Db\Helper\Manager;
 
 trait TableNameTrait
 {
 
     protected $connectionName = 'default';
     protected $tableName;
+
+    //abstract function getCapsule() : Manager;
 
     public function connectionName()
     {
@@ -22,7 +24,8 @@ trait TableNameTrait
 
     public function encodeTableName(string $sourceTableName) : string
     {
-        $targetTableName = TableAliasHelper::encode($this->connectionName(), $sourceTableName);
+        $tableAlias = $this->getCapsule()->getAlias();
+        $targetTableName = $tableAlias->encode($this->connectionName(), $sourceTableName);
         return $targetTableName;
     }
 

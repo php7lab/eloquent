@@ -4,7 +4,7 @@ namespace PhpLab\Eloquent\Migration\Repository;
 
 use PhpLab\Eloquent\Db\Enum\DbDriverEnum;
 use PhpLab\Eloquent\Db\Helper\ManagerFactory;
-use PhpLab\Eloquent\Db\Helper\TableAliasHelper;
+//use PhpLab\Eloquent\Db\Helper\TableAliasHelper;
 use PhpLab\Eloquent\Db\Repository\BaseDbRepository;
 use PhpLab\Eloquent\Migration\Entity\MigrationEntity;
 use PhpLab\Eloquent\Migration\Base\BaseCreateTableMigration;
@@ -41,7 +41,8 @@ class HistoryRepository extends BaseDbRepository
     }
 
     private function insert($version, $connectionName = 'default') {
-        $targetTableName = TableAliasHelper::encode($connectionName, self::MIGRATION_TABLE_NAME);
+        $tableAlias = $this->getCapsule()->getAlias();
+        $targetTableName = $tableAlias->encode($connectionName, self::MIGRATION_TABLE_NAME);
         //$queryBuilder = $this->getQueryBuilder();
         //$queryBuilder = Manager::table($targetTableName, null, $connectionName);
         $queryBuilder = $this->getQueryBuilder();
@@ -52,7 +53,8 @@ class HistoryRepository extends BaseDbRepository
     }
 
     private function delete($version, $connectionName = 'default') {
-        $targetTableName = TableAliasHelper::encode($connectionName, self::MIGRATION_TABLE_NAME);
+        $tableAlias = $this->getCapsule()->getAlias();
+        $targetTableName = $tableAlias->encode($connectionName, self::MIGRATION_TABLE_NAME);
         //$queryBuilder = Manager::table($targetTableName, null, $connectionName);
         $queryBuilder = $this->getQueryBuilder();
         $queryBuilder->where('version', $version);
@@ -106,7 +108,8 @@ class HistoryRepository extends BaseDbRepository
     private function forgeMigrationTable($connectionName = 'default') {
         //ManagerFactory::forgeDb($connectionName);
         $schema = $this->getSchema($connectionName);
-        $targetTableName = TableAliasHelper::encode($connectionName, self::MIGRATION_TABLE_NAME);
+        $tableAlias = $this->getCapsule()->getAlias();
+        $targetTableName = $tableAlias->encode($connectionName, self::MIGRATION_TABLE_NAME);
         $hasTable = $schema->hasTable($targetTableName);
         if($hasTable) {
             return;
@@ -120,7 +123,8 @@ class HistoryRepository extends BaseDbRepository
             $table->timestamp('executed_at');
         };
         $schema = $this->getSchema($connectionName);
-        $targetTableName = TableAliasHelper::encode($connectionName, self::MIGRATION_TABLE_NAME);
+        $tableAlias = $this->getCapsule()->getAlias();
+        $targetTableName = $tableAlias->encode($connectionName, self::MIGRATION_TABLE_NAME);
         $schema->create($targetTableName, $tableSchema);
     }
 

@@ -5,7 +5,7 @@ namespace PhpLab\Eloquent\Fixture\Repository;
 use PhpLab\Domain\Data\Collection;
 use PhpLab\Domain\Repository\BaseRepository;
 use PhpLab\Eloquent\Db\Enum\DbDriverEnum;
-use PhpLab\Eloquent\Db\Helper\TableAliasHelper;
+//use PhpLab\Eloquent\Db\Helper\TableAliasHelper;
 use PhpLab\Eloquent\Db\Repository\BaseDbRepository;
 use PhpLab\Eloquent\Fixture\Entity\FixtureEntity;
 use Illuminate\Database\Capsule\Manager;
@@ -31,14 +31,16 @@ class DbRepository extends BaseDbRepository
 
     public function deleteTable($name)
     {
-        $targetTableName = TableAliasHelper::encode('default', $name);
+        $tableAlias = $this->getCapsule()->getAlias();
+        $targetTableName = $tableAlias->encode('default', $name);
         $schema = $this->getSchema();
         $schema->drop($targetTableName);
     }
 
     public function saveData($name, Collection $collection)
     {
-        $targetTableName = TableAliasHelper::encode('default', $name);
+        $tableAlias = $this->getCapsule()->getAlias();
+        $targetTableName = $tableAlias->encode('default', $name);
         //$queryBuilder = Manager::table($targetTableName);
 
         $connection = $this->getConnection();
@@ -52,7 +54,8 @@ class DbRepository extends BaseDbRepository
 
     public function loadData($name) : Collection
     {
-        $targetTableName = TableAliasHelper::encode('default', $name);
+        $tableAlias = $this->getCapsule()->getAlias();
+        $targetTableName = $tableAlias->encode('default', $name);
         $connection = $this->getConnection();
         $queryBuilder = $connection->table($targetTableName);
 
@@ -63,6 +66,7 @@ class DbRepository extends BaseDbRepository
 
     public function allTables() : Collection
     {
+        $tableAlias = $this->getCapsule()->getAlias();
         /* @var Builder|MySqlBuilder|PostgresBuilder $schema */
         $schema = $this->getSchema();
         $dbName = $schema->getConnection()->getDatabaseName();
@@ -71,7 +75,7 @@ class DbRepository extends BaseDbRepository
         foreach ($array as $item) {
             $key = 'Tables_in_' . $dbName;
             $targetTableName = $item->{$key};
-            $sourceTableName = TableAliasHelper::decode('default', $targetTableName);
+            $sourceTableName = $tableAlias->decode('default', $targetTableName);
             $entity = $this->forgeEntity([
                 'name' => $sourceTableName,
             ]);
@@ -81,9 +85,8 @@ class DbRepository extends BaseDbRepository
     }
 
     private function resetAutoIncrement($name) {
-        $targetTableName = TableAliasHelper::encode('default', $name);
-
-        $targetTableName = TableAliasHelper::encode('default', $name);
+        $tableAlias = $this->getCapsule()->getAlias();
+        $targetTableName = $tableAlias->encode('default', $name);
         $connection = $this->getConnection();
         $queryBuilder = $connection->table($targetTableName);
 

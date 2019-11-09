@@ -6,7 +6,7 @@ use Illuminate\Database\Connection;
 use PhpLab\Domain\Repository\BaseRepository;
 use PhpLab\Eloquent\Db\Helper\ManagerFactory;
 use PhpLab\Eloquent\Db\Traits\TableNameTrait;
-use Illuminate\Database\Capsule\Manager;
+use PhpLab\Eloquent\Db\Helper\Manager;
 use Illuminate\Database\Query\Builder;
 use php7extension\core\exceptions\NotFoundException;
 
@@ -18,7 +18,7 @@ abstract class BaseDbRepository extends BaseRepository
     protected $autoIncrement = 'id';
     private $capsule;
 
-    public function __construct(\PhpLab\Eloquent\Db\Helper\Manager $capsule)
+    public function __construct(Manager $capsule)
     {
         $this->capsule = $capsule;
     }
@@ -26,6 +26,11 @@ abstract class BaseDbRepository extends BaseRepository
     public function autoIncrement()
     {
         return $this->autoIncrement;
+    }
+
+    public function getCapsule() : Manager
+    {
+        return $this->capsule;
     }
 
     public function getConnection() : Connection

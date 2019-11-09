@@ -30,7 +30,7 @@ class FileRepository extends BaseRepository
     {
         $array = [];
         foreach ($this->config['directory'] as $dir) {
-            $fixtureArray = $this->scanDir(FileHelper::rootPath() . '/' . $dir);
+            $fixtureArray = $this->scanDir(FileHelper::prepareRootPath($dir));
             $array = ArrayHelper::merge($array, $fixtureArray);
         }
         $collection = $this->forgeEntityCollection($array);
