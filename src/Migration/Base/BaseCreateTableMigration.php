@@ -4,13 +4,25 @@ namespace PhpLab\Eloquent\Migration\Base;
 
 use Illuminate\Database\Schema\Builder;
 use PhpLab\Eloquent\Db\Enum\DbDriverEnum;
+use PhpLab\Eloquent\Db\Helper\Manager;
 
 abstract class BaseCreateTableMigration extends BaseMigration
 {
 
     protected $tableComment = '';
+    protected $capsule;
 
     abstract public function tableSchema();
+
+    public function __construct(Manager $capsule)
+    {
+        $this->capsule = $capsule;
+    }
+
+    public function getCapsule(): Manager
+    {
+        return $this->capsule;
+    }
 
     public function up(Builder $schema)
     {

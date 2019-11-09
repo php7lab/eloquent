@@ -2,6 +2,8 @@
 
 namespace PhpLab\Eloquent\Fixture\Traits;
 
+use php7extension\core\store\StoreFile;
+
 trait ConfigTrait
 {
 
@@ -12,7 +14,8 @@ trait ConfigTrait
         if ($mainConfigFile == null) {
             //$mainConfigFile = $_ENV['ELOQUENT_CONFIG_FILE'];
         }
-        $config = include(__DIR__ . '/../../../../../../' . $mainConfigFile);
+        $store = new StoreFile(__DIR__ . '/../../../../../../' . $mainConfigFile);
+        $config = $store->load();
         return $config;
     }
 

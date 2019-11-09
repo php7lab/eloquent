@@ -28,7 +28,6 @@ class Manager extends \Illuminate\Database\Capsule\Manager
                 $config['map'] = ArrayHelper::getValue($this->config, 'map', []);
             }
             $this->addConnection($config);
-            //TableAliasHelper::addMap($connectionName, ArrayHelper::getValue($config, 'map', []));
             $this->getAlias()->addMap($connectionName, ArrayHelper::getValue($config, 'map', []));
         }
         $this->bootEloquent();
@@ -71,10 +70,18 @@ class Manager extends \Illuminate\Database\Capsule\Manager
             if ($connectionCofig['driver'] == 'sqlite') {
                 $connectionCofig['database'] = FileHelper::prepareRootPath($connectionCofig['host']);
                 unset($connectionCofig['host']);
-            } else {
-                $connectionCofig['database'] = trim($connectionCofig['database'], '/');
             }
             $connections = ['default' => $connectionCofig];
+        }
+        //dd($connections);
+        foreach ($connections as &$connection) {
+
+            if ($connection['driver'] == 'sqlite') {
+                $connection['database'] = FileHelper::prepareRootPath($connection['database']);
+                unset($connection['host']);
+            } else {
+                $connection['database'] = trim($connection['database'], '/');
+            }
         }
         return $connections;
     }

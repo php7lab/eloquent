@@ -61,7 +61,7 @@ class HistoryRepository extends BaseDbRepository
     public function upMigration($class)
     {
         /** @var BaseCreateTableMigration $migration */
-        $migration = new $class;
+        $migration = new $class($this->getCapsule());
         $schema = $this->getSchema();
         $connection = $schema->getConnection();
         // todo: begin transaction
