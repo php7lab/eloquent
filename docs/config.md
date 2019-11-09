@@ -23,7 +23,7 @@ services:
             $mainConfigFile: '%env(ELOQUENT_CONFIG_FILE)%'
 ```
 
-## Объявление на чистов PHP
+## Объявление на чистом PHP
 
 ```php
 if (!class_exists(Dotenv::class)) {
@@ -54,6 +54,7 @@ connection:
             host: localhost
             database: symfony-on-rails
             username: root
+#            map: карту можно объявлять на каждое соединение отдельно
         pgsqlServer:
             driver: pgsql
             host: localhost
