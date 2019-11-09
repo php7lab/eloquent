@@ -3,7 +3,6 @@
 namespace PhpLab\Eloquent\Db\Helper;
 
 use Illuminate\Container\Container;
-//use Illuminate\Database\Capsule\Manager as IlluminateManager;
 use php7extension\yii\helpers\ArrayHelper;
 use PhpLab\Eloquent\Fixture\Traits\ConfigTrait;
 
@@ -15,52 +14,48 @@ class Manager extends \Illuminate\Database\Capsule\Manager
     public function __construct(?Container $container = null, $mainConfigFile = null)
     {
         parent::__construct($container);
-
         $config = $this->loadConfig($mainConfigFile);
         $this->config = $config['connection'];
-
-        //self::forgeConfig();
-        //$config = $this->getConfig(ManagerFactory::CONNECTION);
         $connections = self::getConnections($this->config);
-        //dd($connections);
-        //self::$capsule = new Manager;
-        //self::$capsule->setAsGlobal();
         foreach ($connections as $connectionName => $config) {
+            if( ! isset($config['map'])) {
+                $config['map'] = ArrayHelper::getValue($this->config, 'map', []);
+            }
             $this->addConnection($config);
             TableAliasHelper::addMap($connectionName, ArrayHelper::getValue($config, 'map', []));
         }
         $this->bootEloquent();
     }
 
-    /*public function getConfig($name = null)
-    {
-        return ArrayHelper::getValue($this->config, $name);
-    }
-
-    private static function forgeConfig()
-    {
-        $mainConfigFile = $_ENV['ELOQUENT_CONFIG_FILE'];
-        if (!$this->config) {
-            $this->config = include(__DIR__ . '/../../../../../../' . $mainConfigFile);
-        }
-    }*/
-
     private static function getConnections(array $config): array
     {
         $defaultConnection = ArrayHelper::getValue($config, 'defaultConnection');
         $connections = ArrayHelper::getValue($config, 'connections', []);
-
-        if (empty($defaultConnection)) {
-            if (!empty($connections['default'])) {
-                $defaultConnection = 'default';
-            } else {
-                $defaultConnection = ArrayHelper::firstKey($connections);
+        if($connections) {
+            if (empty($defaultConnection)) {
+                if (!empty($connections['default'])) {
+                    $defaultConnection = 'default';
+                } else {
+                    $defaultConnection = ArrayHelper::firstKey($connections);
+                }
             }
-        }
-
-        if ($defaultConnection != 'default') {
-            $connections['default'] = $connections[$defaultConnection];
-            unset($connections[$defaultConnection]);
+            if ($defaultConnection != 'default') {
+                $connections['default'] = $connections[$defaultConnection];
+                unset($connections[$defaultConnection]);
+            }
+        } else {
+            $parsedUrl = parse_url($_ENV['DATABASE_URL']);
+            array_map(function ($value) {
+                return rawurldecode($value);
+            }, $parsedUrl);
+            $connectionCofig = [
+                'driver' => $parsedUrl['scheme'],
+                'host' => $parsedUrl['host'],
+                'database' => trim($parsedUrl['path'], '/'),
+                'username' => $parsedUrl['user'],
+                'password' => $parsedUrl['pass'],
+            ];
+            $connections = ['default' => $connectionCofig];
         }
         return $connections;
     }
