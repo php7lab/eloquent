@@ -44,16 +44,16 @@ class Manager extends \Illuminate\Database\Capsule\Manager
                 unset($connections[$defaultConnection]);
             }
         } else {
-            $parsedUrl = parse_url($_ENV['DATABASE_URL']);
-            array_map(function ($value) {
-                return rawurldecode($value);
-            }, $parsedUrl);
+            $dsn = $_ENV['DATABASE_URL'];
+            $dsn = preg_replace('#^((?:pdo_)?sqlite?):///#', '$1://localhost/', $dsn);
+            $dsnConfig = parse_url($dsn);
+            $dsnConfig = array_map('rawurldecode', $dsnConfig);
             $connectionCofig = [
-                'driver' => $parsedUrl['scheme'],
-                'host' => $parsedUrl['host'],
-                'database' => trim($parsedUrl['path'], '/'),
-                'username' => $parsedUrl['user'],
-                'password' => $parsedUrl['pass'],
+                'driver' => ArrayHelper::getValue($dsnConfig, 'scheme'),
+                'host' => ArrayHelper::getValue($dsnConfig, 'host'),
+                'database' => trim(ArrayHelper::getValue($dsnConfig, 'path'), '/'),
+                'username' => ArrayHelper::getValue($dsnConfig, 'user'),
+                'password' => ArrayHelper::getValue($dsnConfig, 'pass'),
             ];
             $connections = ['default' => $connectionCofig];
         }
