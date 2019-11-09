@@ -3,7 +3,7 @@
 
 use Symfony\Component\Console\Application;
 use Symfony\Component\Dotenv\Dotenv;
-use PhpLab\Eloquent\Db\Helper\ManagerFactory;
+use PhpLab\Eloquent\Db\Helper\Manager;
 
 use PhpLab\Eloquent\Fixture\Command\ImportCommand;
 use PhpLab\Eloquent\Fixture\Command\ExportCommand;
@@ -28,13 +28,14 @@ if (!class_exists(Dotenv::class)) {
     (new Dotenv(false))->loadEnv(__DIR__ . '/../../../../.env');
 }
 
-$capsule = new \PhpLab\Eloquent\Db\Helper\Manager;
+$eloquentConfigFile = $_ENV['ELOQUENT_CONFIG_FILE'];
+$capsule = new Manager(null, $eloquentConfigFile);
 
 // создаем консольное приложение
 $application = new Application;
 
 // создаем сервис "Фикстуры" с внедрением двух репозиториев
-$fixtureService = new FixtureService(new DbRepository($capsule), new FileRepository);
+$fixtureService = new FixtureService(new DbRepository($capsule), new FileRepository($eloquentConfigFile));
 
 // создаем и объявляем команду "Экспорт фикстур"
 $exportCommand = new ExportCommand(ExportCommand::getDefaultName(), $fixtureService);
@@ -44,7 +45,7 @@ $application->add($exportCommand);
 $importCommand = new ImportCommand(ImportCommand::getDefaultName(), $fixtureService);
 $application->add($importCommand);
 
-$migrationService = new MigrationService(new SourceRepository, new HistoryRepository($capsule));
+$migrationService = new MigrationService(new SourceRepository($eloquentConfigFile), new HistoryRepository($capsule));
 
 // создаем и объявляем команду "UP"
 $upCommand = new UpCommand(UpCommand::getDefaultName(), $migrationService);
