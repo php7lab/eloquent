@@ -2,7 +2,9 @@
 
 namespace PhpLab\Eloquent\Migration\Repository;
 
-use PhpLab\Eloquent\Db\Helper\ManagerFactory;
+//use PhpLab\Eloquent\Db\Helper\Manager;
+//use PhpLab\Eloquent\Db\Helper\ManagerFactory;
+use PhpLab\Eloquent\Fixture\Traits\ConfigTrait;
 use PhpLab\Eloquent\Migration\Entity\MigrationEntity;
 use php7extension\yii\helpers\ArrayHelper;
 use php7extension\yii\helpers\FileHelper;
@@ -10,10 +12,18 @@ use php7extension\yii\helpers\FileHelper;
 class SourceRepository
 {
 
-    public static function getAll()
+    use ConfigTrait;
+
+    public function __construct($mainConfigFile = null)
     {
-        $config = ManagerFactory::getConfig(ManagerFactory::MIGRATE);
-        $directories = $config['directory'];
+        $config = $this->loadConfig($mainConfigFile);
+        $this->config = $config['migrate'];
+    }
+
+    public function getAll()
+    {
+        //$config = Manager::getConfig(ManagerFactory::MIGRATE);
+        $directories = $this->config['directory'];
         $classes = [];
         foreach ($directories as $dir) {
             $newClasses = self::scanDir($dir);

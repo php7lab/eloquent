@@ -6,6 +6,7 @@ use PhpLab\Domain\Data\Collection;
 use PhpLab\Domain\Repository\BaseRepository;
 use PhpLab\Eloquent\Db\Enum\DbDriverEnum;
 use PhpLab\Eloquent\Db\Helper\TableAliasHelper;
+use PhpLab\Eloquent\Db\Repository\BaseDbRepository;
 use PhpLab\Eloquent\Fixture\Entity\FixtureEntity;
 use Illuminate\Database\Capsule\Manager;
 use Illuminate\Database\Schema\Builder;
@@ -13,14 +14,16 @@ use Illuminate\Database\Schema\MySqlBuilder;
 use Illuminate\Database\Schema\PostgresBuilder;
 use php7extension\yii\helpers\ArrayHelper;
 
-class DbRepository extends BaseRepository
+class DbRepository extends BaseDbRepository
 {
 
     public $entityClass = FixtureEntity::class;
 
-    public function __construct()
+    public function __construct(\PhpLab\Eloquent\Db\Helper\Manager $capsule)
     {
-        $schema = Manager::schema();
+        parent::__construct($capsule);
+
+        $schema = $this->getSchema();
 
         // Выключаем проверку целостности связей
         $schema->disableForeignKeyConstraints();
@@ -29,14 +32,18 @@ class DbRepository extends BaseRepository
     public function deleteTable($name)
     {
         $targetTableName = TableAliasHelper::encode('default', $name);
-        $schema = Manager::schema();
+        $schema = $this->getSchema();
         $schema->drop($targetTableName);
     }
 
     public function saveData($name, Collection $collection)
     {
         $targetTableName = TableAliasHelper::encode('default', $name);
-        $queryBuilder = Manager::table($targetTableName);
+        //$queryBuilder = Manager::table($targetTableName);
+
+        $connection = $this->getConnection();
+        $queryBuilder = $connection->table($targetTableName);
+
         $queryBuilder->truncate();
         $data = ArrayHelper::toArray($collection);
         $queryBuilder->insert($data);
@@ -46,7 +53,10 @@ class DbRepository extends BaseRepository
     public function loadData($name) : Collection
     {
         $targetTableName = TableAliasHelper::encode('default', $name);
-        $queryBuilder = Manager::table($targetTableName);
+        $connection = $this->getConnection();
+        $queryBuilder = $connection->table($targetTableName);
+
+        //$queryBuilder = Manager::table($targetTableName);
         $data = $queryBuilder->get()->toArray();
         return new Collection($data);
     }
@@ -54,7 +64,7 @@ class DbRepository extends BaseRepository
     public function allTables() : Collection
     {
         /* @var Builder|MySqlBuilder|PostgresBuilder $schema */
-        $schema = Manager::schema();
+        $schema = $this->getSchema();
         $dbName = $schema->getConnection()->getDatabaseName();
         $array = $schema->getAllTables();
         $collection = new Collection;
@@ -72,9 +82,16 @@ class DbRepository extends BaseRepository
 
     private function resetAutoIncrement($name) {
         $targetTableName = TableAliasHelper::encode('default', $name);
-        $schema = Manager::schema();
-        $queryBuilder = Manager::table($targetTableName);
-        $driver = $schema->getConnection()->getConfig('driver');
+
+        $targetTableName = TableAliasHelper::encode('default', $name);
+        $connection = $this->getConnection();
+        $queryBuilder = $connection->table($targetTableName);
+
+        //$schema = Manager::schema();
+       // $queryBuilder = Manager::table($targetTableName);
+
+
+        $driver = $this->getConnection()->getConfig('driver');
         if($driver == DbDriverEnum::PGSQL) {
             $max = $queryBuilder->max('id');
             if($max) {

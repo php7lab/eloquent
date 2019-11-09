@@ -2,6 +2,7 @@
 <?php
 
 use Symfony\Component\Console\Application;
+use Symfony\Component\Dotenv\Dotenv;
 use PhpLab\Eloquent\Db\Helper\ManagerFactory;
 
 use PhpLab\Eloquent\Fixture\Command\ImportCommand;
@@ -20,16 +21,20 @@ use PhpLab\Eloquent\Db\Command\DeleteAllTablesCommand;
 
 require __DIR__ . '/../../../autoload.php';
 
-// todo: выпилить костыли (менеджер соединений создавать с помощью контейнера DI)
-// читаем конфиг БД и создаем менеджер соединений Eloquent (глобально)
-$connectionConfig = include (__DIR__ . '/../../../../config/eloquent/main.php');
-ManagerFactory::createManager($connectionConfig);
+if (!class_exists(Dotenv::class)) {
+    throw new RuntimeException('Please run "composer require symfony/dotenv" to load the ".env" files configuring the application.');
+} else {
+    // load all the .env files
+    (new Dotenv(false))->loadEnv(__DIR__ . '/../../../../.env');
+}
+
+$capsule = new \PhpLab\Eloquent\Db\Helper\Manager;
 
 // создаем консольное приложение
 $application = new Application;
 
 // создаем сервис "Фикстуры" с внедрением двух репозиториев
-$fixtureService = new FixtureService(new DbRepository, new FileRepository);
+$fixtureService = new FixtureService(new DbRepository($capsule), new FileRepository);
 
 // создаем и объявляем команду "Экспорт фикстур"
 $exportCommand = new ExportCommand(ExportCommand::getDefaultName(), $fixtureService);
@@ -39,7 +44,7 @@ $application->add($exportCommand);
 $importCommand = new ImportCommand(ImportCommand::getDefaultName(), $fixtureService);
 $application->add($importCommand);
 
-$migrationService = new MigrationService(new SourceRepository, new HistoryRepository);
+$migrationService = new MigrationService(new SourceRepository, new HistoryRepository($capsule));
 
 // создаем и объявляем команду "UP"
 $upCommand = new UpCommand(UpCommand::getDefaultName(), $migrationService);
