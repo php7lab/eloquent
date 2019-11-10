@@ -14,9 +14,16 @@ use PhpLab\Eloquent\Db\Helper\QueryFilter;
 abstract class BaseEloquentCrudRepository extends BaseEloquentRepository implements CrudRepositoryInterface
 {
 
+    protected $primaryKey = ['id'];
+
     public function relations()
     {
         return [];
+    }
+
+    public function primaryKey()
+    {
+        return $this->primaryKey;
     }
 
     protected function queryFilterInstance(Query $query = null)
