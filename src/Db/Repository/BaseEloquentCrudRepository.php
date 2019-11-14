@@ -2,11 +2,13 @@
 
 namespace PhpLab\Eloquent\Db\Repository;
 
+use Doctrine\Common\Util\Inflector;
 use php7extension\core\exceptions\NotFoundException;
 use php7extension\core\helpers\ClassHelper;
 use php7extension\yii\helpers\ArrayHelper;
 use php7rails\domain\BaseEntityWithId;
 use php7rails\domain\data\Query;
+use PhpLab\Domain\Helper\EntityHelper;
 use PhpLab\Domain\Interfaces\CrudRepositoryInterface;
 use PhpLab\Eloquent\Db\Helper\QueryBuilderHelper;
 use PhpLab\Eloquent\Db\Helper\QueryFilter;
@@ -88,9 +90,10 @@ abstract class BaseEloquentCrudRepository extends BaseEloquentRepository impleme
     public function create($entity)
     {
         $columnList = $this->getColumnsForModify();
+        $arraySnakeCase = EntityHelper::toArrayForTablize($entity, $columnList);
         $queryBuilder = $this->getQueryBuilder();
-        $lastId = $queryBuilder->insertGetId($entity->toArray($columnList));
-        $entity->id = $lastId;
+        $lastId = $queryBuilder->insertGetId($arraySnakeCase);
+        $entity->setId($lastId);
     }
 
     private function getColumnsForModify()
@@ -108,7 +111,7 @@ abstract class BaseEloquentCrudRepository extends BaseEloquentRepository impleme
         $columnList = $this->getColumnsForModify();
         $data = ArrayHelper::extractByKeys($data, $columnList);
         $entity = $this->oneById($id);
-        ClassHelper::configure($entity, $data);
+        EntityHelper::setAttributes($entity, $data);
         $queryBuilder = $this->getQueryBuilder();
         $queryBuilder->find($id);
         $queryBuilder->update($data);
