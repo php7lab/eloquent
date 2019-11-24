@@ -18,7 +18,7 @@ ELOQUENT_CONFIG_FILE=config/eloquent/main.yaml
 
 ```
 services:
-    PhpLab\Eloquent\Db\Helper\Manager:
+    PhpLab\Eloquent\Db\Helpers\Manager:
         arguments:
             $mainConfigFile: '%env(ELOQUENT_CONFIG_FILE)%'
 ```

@@ -3,8 +3,8 @@
 namespace PhpLab\Eloquent\Migration\Base;
 
 use Illuminate\Database\Schema\Builder;
-use PhpLab\Eloquent\Db\Enum\DbDriverEnum;
-use PhpLab\Eloquent\Db\Helper\Manager;
+use PhpLab\Eloquent\Db\Enums\DbDriverEnum;
+use PhpLab\Eloquent\Db\Helpers\Manager;
 
 abstract class BaseCreateTableMigration extends BaseMigration
 {

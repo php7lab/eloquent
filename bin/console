@@ -3,21 +3,21 @@
 
 use Symfony\Component\Console\Application;
 use Symfony\Component\Dotenv\Dotenv;
-use PhpLab\Eloquent\Db\Helper\Manager;
+use PhpLab\Eloquent\Db\Helpers\Manager;
 
-use PhpLab\Eloquent\Fixture\Command\ImportCommand;
-use PhpLab\Eloquent\Fixture\Command\ExportCommand;
-use PhpLab\Eloquent\Fixture\Service\FixtureService;
-use PhpLab\Eloquent\Fixture\Repository\DbRepository;
-use PhpLab\Eloquent\Fixture\Repository\FileRepository;
+use PhpLab\Eloquent\Fixture\Commands\ImportCommand;
+use PhpLab\Eloquent\Fixture\Commands\ExportCommand;
+use PhpLab\Eloquent\Fixture\Services\FixtureService;
+use PhpLab\Eloquent\Fixture\Repositories\DbRepository;
+use PhpLab\Eloquent\Fixture\Repositories\FileRepository;
 
-use PhpLab\Eloquent\Migration\Service\MigrationService;
-use PhpLab\Eloquent\Migration\Repository\HistoryRepository;
-use PhpLab\Eloquent\Migration\Repository\SourceRepository;
-use PhpLab\Eloquent\Migration\Command\UpCommand;
-use PhpLab\Eloquent\Migration\Command\DownCommand;
+use PhpLab\Eloquent\Migration\Services\MigrationService;
+use PhpLab\Eloquent\Migration\Repositories\HistoryRepository;
+use PhpLab\Eloquent\Migration\Repositories\SourceRepository;
+use PhpLab\Eloquent\Migration\Commands\UpCommand;
+use PhpLab\Eloquent\Migration\Commands\DownCommand;
 
-use PhpLab\Eloquent\Db\Command\DeleteAllTablesCommand;
+use PhpLab\Eloquent\Db\Commands\DeleteAllTablesCommand;
 
 require __DIR__ . '/../../../autoload.php';
 
