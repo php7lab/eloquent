@@ -28,9 +28,14 @@ abstract class BaseEloquentCrudRepository extends BaseEloquentRepository impleme
         return $this->primaryKey;
     }
 
+    protected function forgeQuery(Query $query = null) {
+        $query = Query::forge($query);
+        return $query;
+    }
+
     protected function queryFilterInstance(Query $query = null)
     {
-        $query = Query::forge($query);
+        $query = $this->forgeQuery($query);
         /** @var QueryFilter $queryFilter */
         $queryFilter = new QueryFilter($this, $query);
         return $queryFilter;
@@ -38,7 +43,7 @@ abstract class BaseEloquentCrudRepository extends BaseEloquentRepository impleme
 
     public function count(Query $query = null): int
     {
-        $query = Query::forge($query);
+        $query = $this->forgeQuery($query);
         $queryBuilder = $this->getQueryBuilder();
         QueryBuilderHelper::setWhere($query, $queryBuilder);
         return $queryBuilder->count();
@@ -46,7 +51,7 @@ abstract class BaseEloquentCrudRepository extends BaseEloquentRepository impleme
 
     public function _all(Query $query = null)
     {
-        $query = Query::forge($query);
+        $query = $this->forgeQuery($query);
         $queryBuilder = $this->getQueryBuilder();
         QueryBuilderHelper::setWhere($query, $queryBuilder);
         QueryBuilderHelper::setSelect($query, $queryBuilder);
@@ -58,7 +63,7 @@ abstract class BaseEloquentCrudRepository extends BaseEloquentRepository impleme
 
     public function all(Query $query = null)
     {
-        $query = Query::forge($query);
+        $query = $this->forgeQuery($query);
         $queryFilter = $this->queryFilterInstance($query);
         $queryWithoutRelations = $queryFilter->getQueryWithoutRelations();
         $collection = $this->_all($queryWithoutRelations);
@@ -69,7 +74,7 @@ abstract class BaseEloquentCrudRepository extends BaseEloquentRepository impleme
 
     public function oneById($id, Query $query = null)
     {
-        $query = Query::forge($query);
+        $query = $this->forgeQuery($query);
         $query->where('id', $id);
         return $this->one($query);
     }
