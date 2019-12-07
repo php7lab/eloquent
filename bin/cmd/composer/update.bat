@@ -1,3 +1,0 @@
-cd ../../..
-composer update
-pause
