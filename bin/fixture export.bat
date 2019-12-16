@@ -1,6 +1,5 @@
 @echo off
-cd ..
-php console db:fixture:import
+php console db:fixture:export
 pause
 
 REM use --withConfirm=0 for skip dialog

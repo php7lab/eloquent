@@ -1,6 +1,5 @@
 @echo off
-cd ..
-php console db:delete-all-tables
+php console db:migrate:up
 pause
 
 REM use --withConfirm=0 for skip dialog
