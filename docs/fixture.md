@@ -17,3 +17,17 @@ $fixture->setCallback(function ($index, FixtureFactoryHelper $fixtureFactory) {
 });
 return $fixture->generateCollection();
 ```
+
+## Консоль
+
+Переходим в папку `bin`:
+
+    cd vendor/php7lab/eloquent/bin
+
+Импорт фикстур:
+
+    php console db:fixture:import
+
+Экспорт фикстур:
+
+    php console db:fixture:export

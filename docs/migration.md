@@ -37,3 +37,18 @@ if (!class_exists(m_2014_10_12_200000_create_post_table::class)) {
 
 }
 ```
+
+## Консоль
+
+Переходим в папку `bin`:
+
+    cd vendor/php7lab/eloquent/bin
+
+Применить миграции:
+
+    php console db:migrate:up
+
+Откатить миграции:
+
+    php console db:migrate:down
+
