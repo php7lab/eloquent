@@ -92,7 +92,7 @@ abstract class BaseEloquentCrudRepository extends BaseEloquentRepository impleme
     /**
      * @param BaseEntityWithId $entity
      */
-    public function create($entity)
+    public function create(object $entity)
     {
         $columnList = $this->getColumnsForModify();
         $arraySnakeCase = EntityHelper::toArrayForTablize($entity, $columnList);
