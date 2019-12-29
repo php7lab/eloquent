@@ -92,7 +92,7 @@ abstract class BaseEloquentCrudRepository extends BaseEloquentRepository impleme
     /**
      * @param BaseEntityWithId $entity
      */
-    public function create(object $entity)
+    public function create($entity)
     {
         $columnList = $this->getColumnsForModify();
         $arraySnakeCase = EntityHelper::toArrayForTablize($entity, $columnList);
@@ -109,6 +109,17 @@ abstract class BaseEloquentCrudRepository extends BaseEloquentRepository impleme
             ArrayHelper::removeByValue($this->autoIncrement(), $columnList);
         }
         return $columnList;
+    }
+
+    /**
+     * @param BaseEntityWithId $entity
+     */
+    public function update(object $entity)
+    {
+        $id = $entity->getId();
+        $queryBuilder = $this->getQueryBuilder();
+        $queryBuilder->find($id);
+        $queryBuilder->update(EntityHelper::toArrayForTablize($entity));
     }
 
     public function updateById($id, $data)

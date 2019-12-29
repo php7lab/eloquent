@@ -4,6 +4,7 @@ namespace PhpLab\Eloquent\Db\Helpers;
 
 use Illuminate\Database\Query\Builder;
 use php7rails\domain\data\Query;
+use php7rails\domain\data\query\Where;
 
 class QueryBuilderHelper
 {
@@ -17,6 +18,18 @@ class QueryBuilderHelper
                     $queryBuilder->whereIn($key, $value);
                 } else {
                     $queryBuilder->where($key, $value);
+                }
+            }
+        }
+
+        $whereArray = $query->getWhereNew();
+        if (!empty($whereArray)) {
+            /** @var Where $where */
+            foreach ($whereArray as $where) {
+                if (is_array($where->value)) {
+                    $queryBuilder->whereIn($where->column, $where->value, $where->boolean, $where->not);
+                } else {
+                    $queryBuilder->where($where->column, $where->operator, $where->value, $where->boolean);
                 }
             }
         }
