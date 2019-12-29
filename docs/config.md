@@ -52,13 +52,13 @@ connection:
         mysqlServer:
             driver: mysql
             host: localhost
-            database: symfony-on-rails
+            database: symfony-tpl
             username: root
 #            map: карту можно объявлять на каждое соединение отдельно
         pgsqlServer:
             driver: pgsql
             host: localhost
-            database: symfony-on-rails
+            database: symfony-tpl
             username: postgres
             password: postgres
         sqliteServer:
