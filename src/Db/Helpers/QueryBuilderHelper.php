@@ -4,7 +4,7 @@ namespace PhpLab\Eloquent\Db\Helpers;
 
 use Illuminate\Database\Query\Builder;
 use php7rails\domain\data\Query;
-use php7rails\domain\data\query\Where;
+use php7rails\domain\entities\query\Where;
 
 class QueryBuilderHelper
 {
