@@ -90,8 +90,8 @@ migrate:
 ```yaml
 connection:
     map:
-        article_category: art.category
-        article_post: art.post
+        article_category: article.category
+        article_post: article.post
         eq_migration: system.migration
         cache: system.cache
         messenger_chat: messenger.chat
@@ -101,5 +101,19 @@ connection:
     ...
 ```
 
-Тут 3 схемы: **art**, **system**, **messenger**.
+Тут 3 схемы: **article**, **system**, **messenger**.
 Хранение данных предметных областей (доменов) логически изолировано.
+
+Получается такой вид БД:
+
+* article
+    * category
+    * post
+* system
+    * migration
+    * cache
+* messenger
+    * chat
+    * flow
+    * member
+    * message
