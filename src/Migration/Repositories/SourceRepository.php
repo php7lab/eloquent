@@ -38,7 +38,7 @@ class SourceRepository
             $classNameClean = FileHelper::fileRemoveExt($file);
             $entity = new MigrationEntity;
             $entity->className = 'Migrations\\' . $classNameClean;
-            $entity->fileName = $dir . '\\' . $classNameClean . '.php';
+            $entity->fileName = $dir . DIRECTORY_SEPARATOR . $classNameClean . '.php';
             $entity->version = $classNameClean;
             include_once($entity->fileName);
             $classes[] = $entity;
