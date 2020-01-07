@@ -82,3 +82,24 @@ migrate:
 * `connection.connections` - подключения к БД
 * `fixture.directory` - пути для поиска фикстур
 * `migrate.directory` - пути для поиска миграций
+
+Для разбивки таблиц по схемам в *Postgres*, надо разделять имя схемы и таблицы точкой.
+
+Например:
+
+```yaml
+connection:
+    map:
+        article_category: art.category
+        article_post: art.post
+        eq_migration: system.migration
+        cache: system.cache
+        messenger_chat: messenger.chat
+        messenger_flow: messenger.flow
+        messenger_member: messenger.member
+        messenger_message: messenger.message
+    ...
+```
+
+Тут 3 схемы: **art**, **system**, **messenger**.
+Хранение данных предметных областей (доменов) логически изолировано.
