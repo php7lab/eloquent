@@ -4,6 +4,7 @@ namespace PhpLab\Eloquent\Fixture\Commands;
 
 use php7extension\yii\helpers\ArrayHelper;
 use PhpLab\Domain\Data\Collection;
+use PhpLab\Domain\Helpers\EntityHelper;
 use PhpLab\Eloquent\Fixture\Entities\FixtureEntity;
 use PhpLab\Sandbox\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Input\InputInterface;
@@ -39,19 +40,19 @@ class ExportCommand extends BaseCommand
         }
 
         $withConfirm = $input->getOption('withConfirm');
-        $tableArray = ArrayHelper::getColumn($tableCollection->toArray(), 'name');
-        $tableArray = array_values($tableArray);
+
+        $tableNameArray = EntityHelper::getColumn($tableCollection, 'name');
         if ($withConfirm) {
             $output->writeln('');
             $question = new ChoiceQuestion(
                 'Select tables for export',
-                $tableArray,
+                $tableNameArray,
                 'a'
             );
             $question->setMultiselect(true);
             $selectedTables = $this->getHelper('question')->ask($input, $output, $question);
         } else {
-            $selectedTables = $tableArray;
+            $selectedTables = $tableNameArray;
         }
 
         $output->writeln('');
