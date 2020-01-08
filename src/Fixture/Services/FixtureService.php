@@ -2,7 +2,7 @@
 
 namespace PhpLab\Eloquent\Fixture\Services;
 
-use PhpLab\Domain\Data\Collection;
+use Illuminate\Support\Collection;
 use PhpLab\Eloquent\Fixture\Repositories\DbRepository;
 use PhpLab\Eloquent\Fixture\Repositories\FileRepository;
 use PhpLab\Eloquent\Migration\Repositories\HistoryRepository;

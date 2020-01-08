@@ -3,7 +3,7 @@
 namespace PhpLab\Eloquent\Fixture\Commands;
 
 use php7extension\yii\helpers\ArrayHelper;
-use PhpLab\Domain\Data\Collection;
+use Illuminate\Support\Collection;
 use PhpLab\Domain\Helpers\EntityHelper;
 use PhpLab\Eloquent\Fixture\Entities\FixtureEntity;
 use PhpLab\Sandbox\Console\Question\ChoiceQuestion;

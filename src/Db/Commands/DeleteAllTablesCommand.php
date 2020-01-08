@@ -4,7 +4,7 @@ namespace PhpLab\Eloquent\Db\Commands;
 
 use php7extension\core\console\helpers\Output;
 use php7extension\yii\helpers\ArrayHelper;
-use PhpLab\Domain\Data\Collection;
+use Illuminate\Support\Collection;
 use PhpLab\Eloquent\Fixture\Entities\FixtureEntity;
 use PhpLab\Sandbox\Console\Helpers\OutputHepler;
 use Symfony\Component\Console\Input\InputInterface;

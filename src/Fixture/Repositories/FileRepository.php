@@ -5,7 +5,7 @@ namespace PhpLab\Eloquent\Fixture\Repositories;
 use php7extension\core\store\StoreFile;
 use php7extension\yii\helpers\ArrayHelper;
 use php7extension\yii\helpers\FileHelper;
-use PhpLab\Domain\Data\Collection;
+use Illuminate\Support\Collection;
 use PhpLab\Domain\Repositories\BaseRepository;
 use PhpLab\Eloquent\Fixture\Entities\FixtureEntity;
 use PhpLab\Eloquent\Fixture\Traits\ConfigTrait;
