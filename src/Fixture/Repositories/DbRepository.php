@@ -26,6 +26,24 @@ class DbRepository extends BaseEloquentRepository
         $schema->disableForeignKeyConstraints();
     }
 
+    public function dropAllTables()
+    {
+        $schema = $this->getSchema();
+        $schema->dropAllTables();
+    }
+    
+    public function dropAllViews()
+    {
+        $schema = $this->getSchema();
+        $schema->dropAllViews();
+    }
+
+    public function dropAllTypes()
+    {
+        $schema = $this->getSchema();
+        $schema->dropAllTypes();
+    }
+    
     public function deleteTable($name)
     {
         $tableAlias = $this->getCapsule()->getAlias();

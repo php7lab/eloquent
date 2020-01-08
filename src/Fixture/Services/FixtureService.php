@@ -40,6 +40,13 @@ class FixtureService
         return $this->filterByExclude($collection);
     }
 
+    public function dropAllTables()
+    {
+        $this->dbRepository->dropAllTables();
+        $this->dbRepository->dropAllViews();
+        //$this->dbRepository->dropAllTypes();
+    }
+    
     public function dropTable($name)
     {
         $this->dbRepository->deleteTable($name);
