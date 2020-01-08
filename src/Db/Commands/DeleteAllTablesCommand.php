@@ -6,6 +6,7 @@ use php7extension\core\console\helpers\Output;
 use php7extension\yii\helpers\ArrayHelper;
 use PhpLab\Domain\Data\Collection;
 use PhpLab\Eloquent\Fixture\Entities\FixtureEntity;
+use PhpLab\Sandbox\Console\Helpers\OutputHepler;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -40,9 +41,9 @@ class DeleteAllTablesCommand extends BaseCommand
         if ($withConfirm) {
             $versionArray = ArrayHelper::getColumn($tableCollection, 'name');
             $versionArray = array_values($versionArray);
-            Output::line();
-            Output::arr($versionArray, 'Tables for delete');
-            Output::line();
+            $output->writeln('');
+            OutputHepler::writeList($output, $versionArray);
+            $output->writeln('');
         }
 
         if (!$this->isContinueQuestion('Sure DELETE all tables?', $input, $output)) {
@@ -53,8 +54,10 @@ class DeleteAllTablesCommand extends BaseCommand
 
         foreach ($tableCollection as $fixtureEntity) {
             $this->fixtureService->dropTable($fixtureEntity->name);
-            $output->writeln(' * ' . $fixtureEntity->name);
+            $output->writeln(' ' . $fixtureEntity->name);
         }
+
+        //$this->fixtureService->dropAllTables();
 
         $output->writeln(['', '<fg=green>DELETE all tables success!</>', '']);
     }

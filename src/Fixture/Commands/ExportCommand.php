@@ -44,7 +44,7 @@ class ExportCommand extends BaseCommand
 
         foreach ($selectedTables as $tableName) {
             $this->fixtureService->exportTable($tableName);
-            $output->writeln(' * ' . $tableName);
+            $output->writeln(' ' . $tableName);
         }
 
         $output->writeln(['', '<fg=green>Fixture EXPORT success!</>', '']);
