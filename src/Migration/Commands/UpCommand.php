@@ -36,9 +36,9 @@ class UpCommand extends BaseCommand
         if ($withConfirm) {
             $versionArray = ArrayHelper::getColumn($filteredCollection, 'version');
             $versionArray = array_values($versionArray);
-            Output::line();
-            Output::arr($versionArray, 'Migrations for UP');
-            Output::line();
+            $output->writeln('');
+            OutputHepler::writeList($output, $versionArray);
+            $output->writeln('');
         }
 
         if (!$this->isContinueQuestion('Apply migrations?', $input, $output)) {
@@ -46,7 +46,7 @@ class UpCommand extends BaseCommand
         }
 
         $outputInfoCallback = function ($version) use ($output) {
-            $output->writeln(' * ' . $version);
+            $output->writeln(' ' . $version);
         };
         $output->writeln('');
         $this->runMigrate($filteredCollection, 'up', $outputInfoCallback);

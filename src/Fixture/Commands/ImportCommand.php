@@ -3,9 +3,9 @@
 namespace PhpLab\Eloquent\Fixture\Commands;
 
 use Illuminate\Database\Eloquent\Collection;
-use php7extension\core\console\helpers\input\Select;
 use php7extension\yii\helpers\ArrayHelper;
 use PhpLab\Eloquent\Fixture\Entities\FixtureEntity;
+use PhpLab\Sandbox\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -26,7 +26,7 @@ class ImportCommand extends BaseCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln(['<fg=white># Fixture IMPORT</>']);
+        $output->writeln('<fg=white># Fixture IMPORT</>');
 
         /** @var FixtureEntity[]|Collection $tableCollection */
         $tableCollection = $this->fixtureService->allFixtures();
@@ -34,8 +34,14 @@ class ImportCommand extends BaseCommand
         $withConfirm = $input->getOption('withConfirm');
         $tableArray = ArrayHelper::getColumn($tableCollection->toArray(), 'name');
         if ($withConfirm) {
-            $selectedTables = Select::display('Select tables for import', $tableArray, 1);
-            $selectedTables = array_values($selectedTables);
+            $output->writeln('');
+            $question = new ChoiceQuestion(
+                'Select tables for import',
+                $tableArray,
+                'a'
+            );
+            $question->setMultiselect(true);
+            $selectedTables = $this->getHelper('question')->ask($input, $output, $question);
         } else {
             $selectedTables = $tableArray;
         }
@@ -44,7 +50,7 @@ class ImportCommand extends BaseCommand
 
         foreach ($selectedTables as $tableName) {
             $this->fixtureService->importTable($tableName);
-            $output->writeln(' * ' . $tableName);
+            $output->writeln(' ' . $tableName);
         }
 
         $output->writeln(['', '<fg=green>Fixture IMPORT success!</>', '']);

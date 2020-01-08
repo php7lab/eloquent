@@ -2,10 +2,10 @@
 
 namespace PhpLab\Eloquent\Fixture\Commands;
 
-use php7extension\core\console\helpers\input\Select;
 use php7extension\yii\helpers\ArrayHelper;
 use PhpLab\Domain\Data\Collection;
 use PhpLab\Eloquent\Fixture\Entities\FixtureEntity;
+use PhpLab\Sandbox\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -26,16 +26,30 @@ class ExportCommand extends BaseCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln(['<fg=white># Fixture EXPORT</>']);
+        $output->writeln('<fg=white># Fixture EXPORT</>');
 
         /** @var FixtureEntity[]|Collection $tableCollection */
         $tableCollection = $this->fixtureService->allTables();
 
+        if($tableCollection->count() == 0) {
+            $output->writeln('');
+            $output->writeln('<fg=magenta>No tables in database!</>');
+            $output->writeln('');
+            return;
+        }
+
         $withConfirm = $input->getOption('withConfirm');
         $tableArray = ArrayHelper::getColumn($tableCollection->toArray(), 'name');
+        $tableArray = array_values($tableArray);
         if ($withConfirm) {
-            $selectedTables = Select::display('Select tables for export', $tableArray, 1);
-            $selectedTables = array_values($selectedTables);
+            $output->writeln('');
+            $question = new ChoiceQuestion(
+                'Select tables for export',
+                $tableArray,
+                'a'
+            );
+            $question->setMultiselect(true);
+            $selectedTables = $this->getHelper('question')->ask($input, $output, $question);
         } else {
             $selectedTables = $tableArray;
         }

@@ -24,7 +24,7 @@ class DownCommand extends BaseCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln(['<fg=white># Migrate DOWN</>']);
+        $output->writeln('<fg=white># Migrate DOWN</>');
 
         $historyCollection = $this->migrationService->allForDown();
         if (empty($historyCollection)) {
@@ -36,9 +36,9 @@ class DownCommand extends BaseCommand
         if ($withConfirm) {
             $versionArray = ArrayHelper::getColumn($historyCollection, 'version');
             $versionArray = array_values($versionArray);
-            Output::line();
-            Output::arr($versionArray, 'Migrations for DOWN');
-            Output::line();
+            $output->writeln('');
+            OutputHepler::writeList($output, $versionArray);
+            $output->writeln('');
         }
 
         if (!$this->isContinueQuestion('Down migrations?', $input, $output)) {
@@ -46,7 +46,7 @@ class DownCommand extends BaseCommand
         }
 
         $outputInfoCallback = function ($version) use ($output) {
-            $output->writeln(' * ' . $version);
+            $output->writeln(' ' . $version);
         };
         $output->writeln('');
         $this->runMigrate($historyCollection, 'down', $outputInfoCallback);
