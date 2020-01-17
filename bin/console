@@ -12,10 +12,13 @@ use PhpLab\Eloquent\Fixture\Repositories\DbRepository;
 use PhpLab\Eloquent\Fixture\Repositories\FileRepository;
 
 use PhpLab\Eloquent\Migration\Services\MigrationService;
+use PhpLab\Eloquent\Migration\Services\GenerateService;
+use PhpLab\Eloquent\Migration\Repositories\File\GenerateRepository;
 use PhpLab\Eloquent\Migration\Repositories\HistoryRepository;
 use PhpLab\Eloquent\Migration\Repositories\SourceRepository;
 use PhpLab\Eloquent\Migration\Commands\UpCommand;
 use PhpLab\Eloquent\Migration\Commands\DownCommand;
+use PhpLab\Eloquent\Migration\Commands\GenerateCommand;
 
 use PhpLab\Eloquent\Db\Commands\DeleteAllTablesCommand;
 
@@ -46,6 +49,7 @@ $importCommand = new ImportCommand(ImportCommand::getDefaultName(), $fixtureServ
 $application->add($importCommand);
 
 $migrationService = new MigrationService(new SourceRepository($eloquentConfigFile), new HistoryRepository($capsule));
+$generateService = new GenerateService(new GenerateRepository);
 
 // создаем и объявляем команду "UP"
 $upCommand = new UpCommand(UpCommand::getDefaultName(), $migrationService);
@@ -53,6 +57,10 @@ $application->add($upCommand);
 
 // создаем и объявляем команду "Down"
 $downCommand = new DownCommand(DownCommand::getDefaultName(), $migrationService);
+$application->add($downCommand);
+
+// создаем и объявляем команду "Generate"
+$downCommand = new GenerateCommand(GenerateCommand::getDefaultName(), $generateService);
 $application->add($downCommand);
 
 // создаем и объявляем команду "deleteAllTables"
