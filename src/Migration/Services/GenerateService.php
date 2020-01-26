@@ -2,7 +2,7 @@
 
 namespace PhpLab\Eloquent\Migration\Services;
 
-use php7extension\core\helpers\ClassHelper;
+use PhpLab\Sandbox\Common\Helpers\ClassHelper;
 use PhpLab\Eloquent\Migration\Enums\GenerateActionEnum;
 use PhpLab\Eloquent\Migration\Interfaces\Services\GenerateServiceInterface;
 use PhpLab\Domain\Services\BaseService;
