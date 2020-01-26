@@ -9,7 +9,6 @@ use php7extension\core\code\entities\ClassEntity;
 use php7extension\core\code\entities\ClassUseEntity;
 use php7extension\core\code\entities\InterfaceEntity;
 use php7extension\core\code\helpers\ClassHelper;
-use php7rails\domain\base\BaseDto;
 use PhpLab\Sandbox\Generator\Domain\Dto\BuildDto;
 use Zend\Code\Generator\ClassGenerator;
 use Zend\Code\Generator\FileGenerator;

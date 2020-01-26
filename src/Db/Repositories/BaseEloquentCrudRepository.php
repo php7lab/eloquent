@@ -3,7 +3,7 @@
 namespace PhpLab\Eloquent\Db\Repositories;
 
 use Doctrine\Common\Util\Inflector;
-use php7extension\core\exceptions\NotFoundException;
+use PhpLab\Sandbox\Common\Exceptions\NotFoundException;
 use php7extension\core\helpers\ClassHelper;
 use php7extension\yii\helpers\ArrayHelper;
 use php7rails\domain\BaseEntityWithId;

@@ -4,7 +4,7 @@ namespace PhpLab\Eloquent\Db\Repositories;
 
 use Illuminate\Database\Connection;
 use Illuminate\Database\Query\Builder;
-use php7extension\core\exceptions\NotFoundException;
+use PhpLab\Sandbox\Common\Exceptions\NotFoundException;
 use PhpLab\Domain\Repositories\BaseRepository;
 use PhpLab\Eloquent\Db\Helpers\Manager;
 use PhpLab\Eloquent\Db\Traits\TableNameTrait;
