@@ -2,7 +2,7 @@
 
 namespace PhpLab\Eloquent\Fixture\Repositories;
 
-use php7extension\core\store\StoreFile;
+use PhpLab\Sandbox\Common\Libs\Store\StoreFile;
 use php7extension\yii\helpers\ArrayHelper;
 use php7extension\yii\helpers\FileHelper;
 use Illuminate\Support\Collection;
