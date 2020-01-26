@@ -7,8 +7,8 @@ use php7rails\domain\repositories\BaseRepository;
 use PhpLab\Domain\Data\Query;
 use PhpLab\Domain\Helpers\Repository\RelationHelper;
 use PhpLab\Domain\Helpers\Repository\RelationWithHelper;
-use PhpLab\Domain\Interfaces\ReadAllServiceInterface;
-use PhpLab\Domain\Interfaces\RelationConfigInterface;
+use PhpLab\Domain\Interfaces\ReadAllInterface;
+use PhpLab\Domain\Interfaces\Repository\RelationConfigInterface;
 
 /**
  * Class QueryFilter
@@ -26,7 +26,7 @@ class QueryFilter
     private $query;
     private $with;
 
-    public function __construct(ReadAllServiceInterface $repository, Query $query)
+    public function __construct(ReadAllInterface $repository, Query $query)
     {
         $this->repository = $repository;
         $this->query = $query;

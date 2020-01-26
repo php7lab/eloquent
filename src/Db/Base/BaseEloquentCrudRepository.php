@@ -1,12 +1,12 @@
 <?php
 
-namespace PhpLab\Eloquent\Db\Repositories;
+namespace PhpLab\Eloquent\Db\Base;
 
 use php7extension\yii\helpers\ArrayHelper;
 use PhpLab\Domain\Base\BaseEntityWithId;
 use PhpLab\Domain\Data\Query;
 use PhpLab\Domain\Helpers\EntityHelper;
-use PhpLab\Domain\Interfaces\CrudRepositoryInterface;
+use PhpLab\Domain\Interfaces\Repository\CrudRepositoryInterface;
 use PhpLab\Eloquent\Db\Helpers\QueryBuilderHelper;
 use PhpLab\Eloquent\Db\Helpers\QueryFilter;
 use PhpLab\Sandbox\Common\Exceptions\NotFoundException;

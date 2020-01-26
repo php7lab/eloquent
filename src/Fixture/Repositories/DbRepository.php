@@ -8,7 +8,7 @@ use Illuminate\Database\Schema\PostgresBuilder;
 use Illuminate\Support\Collection;
 use php7extension\yii\helpers\ArrayHelper;
 use PhpLab\Eloquent\Db\Enums\DbDriverEnum;
-use PhpLab\Eloquent\Db\Repositories\BaseEloquentRepository;
+use PhpLab\Eloquent\Db\Base\BaseEloquentRepository;
 use PhpLab\Eloquent\Fixture\Entities\FixtureEntity;
 
 class DbRepository extends BaseEloquentRepository

@@ -2,7 +2,7 @@
 
 namespace PhpLab\Eloquent\Migration\Services;
 
-use PhpLab\Domain\Services\BaseService;
+use PhpLab\Domain\Base\BaseService;
 use PhpLab\Eloquent\Migration\Interfaces\Repositories\GenerateRepositoryInterface;
 use PhpLab\Eloquent\Migration\Interfaces\Services\GenerateServiceInterface;
 use PhpLab\Eloquent\Migration\Scenarios\Render\CreateTableRender;
