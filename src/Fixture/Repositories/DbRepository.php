@@ -5,8 +5,8 @@ namespace PhpLab\Eloquent\Fixture\Repositories;
 use Illuminate\Database\Schema\Builder;
 use Illuminate\Database\Schema\MySqlBuilder;
 use Illuminate\Database\Schema\PostgresBuilder;
-use php7extension\yii\helpers\ArrayHelper;
 use Illuminate\Support\Collection;
+use php7extension\yii\helpers\ArrayHelper;
 use PhpLab\Eloquent\Db\Enums\DbDriverEnum;
 use PhpLab\Eloquent\Db\Repositories\BaseEloquentRepository;
 use PhpLab\Eloquent\Fixture\Entities\FixtureEntity;
@@ -31,7 +31,7 @@ class DbRepository extends BaseEloquentRepository
         $schema = $this->getSchema();
         $schema->dropAllTables();
     }
-    
+
     public function dropAllViews()
     {
         $schema = $this->getSchema();
@@ -43,7 +43,7 @@ class DbRepository extends BaseEloquentRepository
         $schema = $this->getSchema();
         $schema->dropAllTypes();
     }
-    
+
     public function deleteTable($name)
     {
         $tableAlias = $this->getCapsule()->getAlias();

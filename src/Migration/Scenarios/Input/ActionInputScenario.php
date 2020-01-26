@@ -9,7 +9,8 @@ use Symfony\Component\Console\Question\Question;
 class ActionInputScenario extends BaseInputScenario
 {
 
-    public function choices() {
+    public function choices()
+    {
         return GenerateActionEnum::values();
     }
 

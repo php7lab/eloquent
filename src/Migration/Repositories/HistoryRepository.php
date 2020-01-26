@@ -3,11 +3,11 @@
 namespace PhpLab\Eloquent\Migration\Repositories;
 
 use Illuminate\Database\Schema\Blueprint;
-use PhpLab\Sandbox\Common\Helpers\ClassHelper;
 use php7extension\yii\helpers\ArrayHelper;
 use PhpLab\Eloquent\Db\Repositories\BaseEloquentRepository;
 use PhpLab\Eloquent\Migration\Base\BaseCreateTableMigration;
 use PhpLab\Eloquent\Migration\Entities\MigrationEntity;
+use PhpLab\Sandbox\Common\Helpers\ClassHelper;
 
 //use PhpLab\Eloquent\Db\Helpers\TableAliasHelper;
 
@@ -31,7 +31,7 @@ class HistoryRepository extends BaseEloquentRepository
         $diff = array_diff($sourceVersionArray, $historyVersionArray);
 
         foreach ($sourceCollection as $key => $migrationEntity) {
-            if (!in_array($migrationEntity->version, $diff)) {
+            if ( ! in_array($migrationEntity->version, $diff)) {
                 unset($sourceCollection[$key]);
             }
         }

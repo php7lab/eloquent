@@ -41,7 +41,7 @@ class DownCommand extends BaseCommand
             $output->writeln('');
         }
 
-        if (!$this->isContinueQuestion('Down migrations?', $input, $output)) {
+        if ( ! $this->isContinueQuestion('Down migrations?', $input, $output)) {
             return;
         }
 

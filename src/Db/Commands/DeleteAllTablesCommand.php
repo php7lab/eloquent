@@ -2,8 +2,8 @@
 
 namespace PhpLab\Eloquent\Db\Commands;
 
-use php7extension\yii\helpers\ArrayHelper;
 use Illuminate\Support\Collection;
+use php7extension\yii\helpers\ArrayHelper;
 use PhpLab\Eloquent\Fixture\Entities\FixtureEntity;
 use PhpLab\Sandbox\Console\Helpers\OutputHepler;
 use Symfony\Component\Console\Input\InputInterface;
@@ -45,7 +45,7 @@ class DeleteAllTablesCommand extends BaseCommand
             $output->writeln('');
         }
 
-        if (!$this->isContinueQuestion('Sure DELETE all tables?', $input, $output)) {
+        if ( ! $this->isContinueQuestion('Sure DELETE all tables?', $input, $output)) {
             return;
         }
 

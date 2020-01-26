@@ -2,7 +2,6 @@
 
 namespace PhpLab\Eloquent\Fixture\Commands;
 
-use php7extension\yii\helpers\ArrayHelper;
 use Illuminate\Support\Collection;
 use PhpLab\Domain\Helpers\EntityHelper;
 use PhpLab\Eloquent\Fixture\Entities\FixtureEntity;
@@ -32,7 +31,7 @@ class ExportCommand extends BaseCommand
         /** @var FixtureEntity[]|Collection $tableCollection */
         $tableCollection = $this->fixtureService->allTables();
 
-        if($tableCollection->count() == 0) {
+        if ($tableCollection->count() == 0) {
             $output->writeln('');
             $output->writeln('<fg=magenta>No tables in database!</>');
             $output->writeln('');

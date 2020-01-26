@@ -41,7 +41,7 @@ class UpCommand extends BaseCommand
             $output->writeln('');
         }
 
-        if (!$this->isContinueQuestion('Apply migrations?', $input, $output)) {
+        if ( ! $this->isContinueQuestion('Apply migrations?', $input, $output)) {
             return;
         }
 

@@ -24,7 +24,7 @@ class Manager extends \Illuminate\Database\Capsule\Manager
         $this->tableAlias = new TableAliasHelper;
 
         foreach ($connections as $connectionName => $config) {
-            if (!isset($config['map'])) {
+            if ( ! isset($config['map'])) {
                 $config['map'] = ArrayHelper::getValue($this->config, 'map', []);
             }
             $this->addConnection($config);
@@ -44,7 +44,7 @@ class Manager extends \Illuminate\Database\Capsule\Manager
         $connections = ArrayHelper::getValue($config, 'connections', []);
         if ($connections) {
             if (empty($defaultConnection)) {
-                if (!empty($connections['default'])) {
+                if ( ! empty($connections['default'])) {
                     $defaultConnection = 'default';
                 } else {
                     $defaultConnection = ArrayHelper::firstKey($connections);

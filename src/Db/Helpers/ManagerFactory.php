@@ -30,7 +30,7 @@ class ManagerFactory
 
     private static function forgeConfig()
     {
-        if (!self::$config) {
+        if ( ! self::$config) {
             self::$config = include(__DIR__ . '/../../../../../../' . $_ENV['ELOQUENT_CONFIG_FILE']);
         }
     }

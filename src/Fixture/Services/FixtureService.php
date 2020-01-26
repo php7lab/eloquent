@@ -46,7 +46,7 @@ class FixtureService
         $this->dbRepository->dropAllViews();
         //$this->dbRepository->dropAllTypes();
     }
-    
+
     public function dropTable($name)
     {
         $this->dbRepository->deleteTable($name);

@@ -2,7 +2,6 @@
 
 namespace PhpLab\Eloquent\Migration\Scenarios\Input;
 
-use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\Question;
 
 class TableNameInputScenario extends BaseInputScenario

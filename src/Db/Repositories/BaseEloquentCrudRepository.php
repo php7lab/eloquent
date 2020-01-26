@@ -2,9 +2,6 @@
 
 namespace PhpLab\Eloquent\Db\Repositories;
 
-use Doctrine\Common\Util\Inflector;
-use PhpLab\Sandbox\Common\Exceptions\NotFoundException;
-use PhpLab\Sandbox\Common\Helpers\ClassHelper;
 use php7extension\yii\helpers\ArrayHelper;
 use PhpLab\Domain\Base\BaseEntityWithId;
 use PhpLab\Domain\Data\Query;
@@ -12,6 +9,7 @@ use PhpLab\Domain\Helpers\EntityHelper;
 use PhpLab\Domain\Interfaces\CrudRepositoryInterface;
 use PhpLab\Eloquent\Db\Helpers\QueryBuilderHelper;
 use PhpLab\Eloquent\Db\Helpers\QueryFilter;
+use PhpLab\Sandbox\Common\Exceptions\NotFoundException;
 
 abstract class BaseEloquentCrudRepository extends BaseEloquentRepository implements CrudRepositoryInterface
 {
@@ -28,7 +26,8 @@ abstract class BaseEloquentCrudRepository extends BaseEloquentRepository impleme
         return $this->primaryKey;
     }
 
-    protected function forgeQuery(Query $query = null) {
+    protected function forgeQuery(Query $query = null)
+    {
         $query = Query::forge($query);
         return $query;
     }

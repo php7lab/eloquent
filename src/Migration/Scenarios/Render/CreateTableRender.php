@@ -2,21 +2,16 @@
 
 namespace PhpLab\Eloquent\Migration\Scenarios\Render;
 
-use php7extension\core\code\entities\ClassVariableEntity;
-use php7extension\core\code\enums\AccessEnum;
-use php7extension\yii\helpers\Inflector;
 use php7extension\core\code\entities\ClassEntity;
 use php7extension\core\code\entities\ClassUseEntity;
+use php7extension\core\code\entities\ClassVariableEntity;
 use php7extension\core\code\entities\InterfaceEntity;
+use php7extension\core\code\enums\AccessEnum;
 use php7extension\core\code\helpers\ClassHelper;
-use PhpLab\Sandbox\Generator\Domain\Dto\BuildDto;
-use Zend\Code\Generator\ClassGenerator;
-use Zend\Code\Generator\FileGenerator;
-use Zend\Code\Generator\InterfaceGenerator;
-use Zend\Code\Generator\ParameterGenerator;
 use php7extension\yii\helpers\FileHelper;
 use PhpLab\Sandbox\Generator\Domain\Helpers\TemplateCodeHelper;
 use PhpLab\Sandbox\Package\Domain\Helpers\PackageHelper;
+use Zend\Code\Generator\FileGenerator;
 
 class CreateTableRender extends BaseRender
 {

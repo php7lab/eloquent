@@ -2,12 +2,11 @@
 
 namespace PhpLab\Eloquent\Migration\Services;
 
-use PhpLab\Sandbox\Common\Helpers\ClassHelper;
-use PhpLab\Eloquent\Migration\Enums\GenerateActionEnum;
-use PhpLab\Eloquent\Migration\Interfaces\Services\GenerateServiceInterface;
 use PhpLab\Domain\Services\BaseService;
 use PhpLab\Eloquent\Migration\Interfaces\Repositories\GenerateRepositoryInterface;
+use PhpLab\Eloquent\Migration\Interfaces\Services\GenerateServiceInterface;
 use PhpLab\Eloquent\Migration\Scenarios\Render\CreateTableRender;
+use PhpLab\Sandbox\Common\Helpers\ClassHelper;
 
 class GenerateService extends BaseService implements GenerateServiceInterface
 {
@@ -17,12 +16,12 @@ class GenerateService extends BaseService implements GenerateServiceInterface
         $this->repository = $repository;
     }
 
-    public function generate(object $dto) {
-
+    public function generate(object $dto)
+    {
 
 
         //if($dto->type == GenerateActionEnum::CREATE_TABLE) {
-            $class = CreateTableRender::class;
+        $class = CreateTableRender::class;
         //}
 
         //dd($dto);

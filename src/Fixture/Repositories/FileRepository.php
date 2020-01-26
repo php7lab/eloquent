@@ -2,13 +2,13 @@
 
 namespace PhpLab\Eloquent\Fixture\Repositories;
 
-use PhpLab\Sandbox\Common\Libs\Store\StoreFile;
+use Illuminate\Support\Collection;
 use php7extension\yii\helpers\ArrayHelper;
 use php7extension\yii\helpers\FileHelper;
-use Illuminate\Support\Collection;
 use PhpLab\Domain\Repositories\BaseRepository;
 use PhpLab\Eloquent\Fixture\Entities\FixtureEntity;
 use PhpLab\Eloquent\Fixture\Traits\ConfigTrait;
+use PhpLab\Sandbox\Common\Libs\Store\StoreFile;
 
 class FileRepository extends BaseRepository
 {

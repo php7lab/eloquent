@@ -41,7 +41,7 @@ abstract class BaseCommand extends Command
     protected function isContinueQuestion(string $question, InputInterface $input, OutputInterface $output): bool
     {
         $withConfirm = $input->getOption('withConfirm');
-        if (!$withConfirm) {
+        if ( ! $withConfirm) {
             return true;
         }
         $helper = $this->getHelper('question');
