@@ -1,26 +1,26 @@
 {
-	"name": "php7lab/eloquent",
-	"type": "extension",
-	"license": "MIT",
-	"authors": [
-		{
-			"name": "Yamshikov Vitaliy",
-			"email": "theyamshikov@yandex.ru"
-		}
-	],
-	"minimum-stability": "dev",
-	"require": {
-		"illuminate/database": "^6.3",
-		"symfony/console": "4.3.*",
-		"symfony/property-access": "4.3.*",
-		"symfony/serializer": "4.3.*",
-		"symfony/dotenv": "4.3.*",
-		"symfony/yaml": "4.3.*"
-	},
-	"autoload": {
-		"psr-4": {
-			"PhpLab\\Eloquent\\": "src",
-			"PhpLab\\Eloquent\\Tests\\": "tests"
-		}
-	}
+  "name": "php7lab/eloquent",
+  "type": "extension",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Yamshikov Vitaliy",
+      "email": "theyamshikov@yandex.ru"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "illuminate/database": "^6.3",
+    "symfony/console": "4.3.*",
+    "symfony/property-access": "4.3.*",
+    "symfony/serializer": "4.3.*",
+    "symfony/dotenv": "4.3.*",
+    "symfony/yaml": "4.3.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "PhpLab\\Eloquent\\": "src",
+      "PhpLab\\Eloquent\\Tests\\": "tests"
+    }
+  }
 }
