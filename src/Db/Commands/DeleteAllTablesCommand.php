@@ -2,7 +2,6 @@
 
 namespace PhpLab\Eloquent\Db\Commands;
 
-use php7extension\core\console\helpers\Output;
 use php7extension\yii\helpers\ArrayHelper;
 use Illuminate\Support\Collection;
 use PhpLab\Eloquent\Fixture\Entities\FixtureEntity;
