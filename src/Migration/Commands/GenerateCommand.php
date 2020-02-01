@@ -5,6 +5,7 @@ namespace PhpLab\Eloquent\Migration\Commands;
 use PhpLab\Eloquent\Migration\Interfaces\Services\GenerateServiceInterface;
 use PhpLab\Eloquent\Migration\Scenarios\Input\ActionInputScenario;
 use PhpLab\Eloquent\Migration\Scenarios\Input\BaseInputScenario;
+use PhpLab\Eloquent\Migration\Scenarios\Input\DomainNamespaceInputScenario;
 use PhpLab\Eloquent\Migration\Scenarios\Input\TableNameInputScenario;
 use PhpLab\Eloquent\Migration\Scenarios\Input\TypeInputScenario;
 use PhpLab\Sandbox\Generator\Commands\BaseGeneratorCommand;
@@ -43,11 +44,14 @@ class GenerateCommand extends BaseGeneratorCommand
 
     private function input(InputInterface $input, OutputInterface $output, object $dto)
     {
-        $dto->type = "create table";
+
+
+        /*$dto->type = "create table";
         $dto->tableName = "qwerty";
         $dto->domainNamespace = "App\\Domain";
-        return $dto;
+        return $dto;*/
 
+        $this->runInputScenario(DomainNamespaceInputScenario::class, $input, $output, $dto);
         $this->runInputScenario(ActionInputScenario::class, $input, $output, $dto);
         $this->runInputScenario(TableNameInputScenario::class, $input, $output, $dto);
     }
