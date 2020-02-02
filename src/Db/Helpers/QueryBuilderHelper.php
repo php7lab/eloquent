@@ -3,7 +3,7 @@
 namespace PhpLab\Eloquent\Db\Helpers;
 
 use Illuminate\Database\Query\Builder;
-use PhpLab\Core\Domain\Data\Query;
+use PhpLab\Core\Domain\Libs\Query;
 use PhpLab\Core\Domain\Entities\Query\Where;
 
 class QueryBuilderHelper

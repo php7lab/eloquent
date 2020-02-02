@@ -4,7 +4,7 @@ namespace PhpLab\Eloquent\Db\Base;
 
 use PhpLab\Core\Legacy\Yii\Helpers\ArrayHelper;
 use PhpLab\Core\Domain\Base\BaseEntityWithId;
-use PhpLab\Core\Domain\Data\Query;
+use PhpLab\Core\Domain\Libs\Query;
 use PhpLab\Core\Domain\Helpers\EntityHelper;
 use PhpLab\Core\Domain\Interfaces\Repository\CrudRepositoryInterface;
 use PhpLab\Eloquent\Db\Helpers\QueryBuilderHelper;

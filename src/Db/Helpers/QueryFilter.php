@@ -4,7 +4,7 @@ namespace PhpLab\Eloquent\Db\Helpers;
 
 use Illuminate\Support\Collection;
 use php7rails\domain\repositories\BaseRepository;
-use PhpLab\Core\Domain\Data\Query;
+use PhpLab\Core\Domain\Libs\Query;
 use PhpLab\Core\Domain\Helpers\Repository\RelationHelper;
 use PhpLab\Core\Domain\Helpers\Repository\RelationWithHelper;
 use PhpLab\Core\Domain\Interfaces\ReadAllInterface;
