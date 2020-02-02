@@ -3,13 +3,13 @@
 namespace PhpLab\Eloquent\Db\Base;
 
 use php7extension\yii\helpers\ArrayHelper;
-use PhpLab\Domain\Base\BaseEntityWithId;
-use PhpLab\Domain\Data\Query;
-use PhpLab\Domain\Helpers\EntityHelper;
-use PhpLab\Domain\Interfaces\Repository\CrudRepositoryInterface;
+use PhpLab\Core\Domain\Base\BaseEntityWithId;
+use PhpLab\Core\Domain\Data\Query;
+use PhpLab\Core\Domain\Helpers\EntityHelper;
+use PhpLab\Core\Domain\Interfaces\Repository\CrudRepositoryInterface;
 use PhpLab\Eloquent\Db\Helpers\QueryBuilderHelper;
 use PhpLab\Eloquent\Db\Helpers\QueryFilter;
-use PhpLab\Sandbox\Common\Exceptions\NotFoundException;
+use PhpLab\Core\Common\Exceptions\NotFoundException;
 
 abstract class BaseEloquentCrudRepository extends BaseEloquentRepository implements CrudRepositoryInterface
 {

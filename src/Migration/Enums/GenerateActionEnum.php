@@ -2,7 +2,7 @@
 
 namespace PhpLab\Eloquent\Migration\Enums;
 
-use PhpLab\Domain\Base\BaseEnum;
+use PhpLab\Core\Domain\Base\BaseEnum;
 
 class GenerateActionEnum extends BaseEnum
 {

@@ -4,10 +4,10 @@ namespace PhpLab\Eloquent\Db\Base;
 
 use Illuminate\Database\Connection;
 use Illuminate\Database\Query\Builder;
-use PhpLab\Domain\Base\BaseRepository;
+use PhpLab\Core\Domain\Base\BaseRepository;
 use PhpLab\Eloquent\Db\Helpers\Manager;
 use PhpLab\Eloquent\Db\Traits\TableNameTrait;
-use PhpLab\Sandbox\Common\Exceptions\NotFoundException;
+use PhpLab\Core\Common\Exceptions\NotFoundException;
 
 abstract class BaseEloquentRepository extends BaseRepository
 {

@@ -2,7 +2,7 @@
 
 namespace PhpLab\Eloquent\Db\Enums;
 
-use PhpLab\Domain\Base\BaseEnum;
+use PhpLab\Core\Domain\Base\BaseEnum;
 
 class DbDriverEnum extends BaseEnum
 {

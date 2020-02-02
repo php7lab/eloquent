@@ -3,9 +3,9 @@
 namespace PhpLab\Eloquent\Fixture\Commands;
 
 use Illuminate\Support\Collection;
-use PhpLab\Domain\Helpers\EntityHelper;
+use PhpLab\Core\Domain\Helpers\EntityHelper;
 use PhpLab\Eloquent\Fixture\Entities\FixtureEntity;
-use PhpLab\Sandbox\Console\Question\ChoiceQuestion;
+use PhpLab\Core\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 

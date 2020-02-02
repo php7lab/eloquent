@@ -4,16 +4,16 @@ namespace PhpLab\Eloquent\Db\Helpers;
 
 use Illuminate\Support\Collection;
 use php7rails\domain\repositories\BaseRepository;
-use PhpLab\Domain\Data\Query;
-use PhpLab\Domain\Helpers\Repository\RelationHelper;
-use PhpLab\Domain\Helpers\Repository\RelationWithHelper;
-use PhpLab\Domain\Interfaces\ReadAllInterface;
-use PhpLab\Domain\Interfaces\Repository\RelationConfigInterface;
+use PhpLab\Core\Domain\Data\Query;
+use PhpLab\Core\Domain\Helpers\Repository\RelationHelper;
+use PhpLab\Core\Domain\Helpers\Repository\RelationWithHelper;
+use PhpLab\Core\Domain\Interfaces\ReadAllInterface;
+use PhpLab\Core\Domain\Interfaces\Repository\RelationConfigInterface;
 
 /**
  * Class QueryFilter
  *
- * @package PhpLab\Domain\Helpers\Repository
+ * @package PhpLab\Core\Domain\Helpers\Repository
  *
  */
 class QueryFilter

@@ -2,7 +2,7 @@
 
 namespace PhpLab\Eloquent\Migration\Repositories\File;
 
-use PhpLab\Domain\Base\BaseRepository;
+use PhpLab\Core\Domain\Base\BaseRepository;
 use PhpLab\Eloquent\Migration\Interfaces\Repositories\GenerateRepositoryInterface;
 
 class GenerateRepository extends BaseRepository implements GenerateRepositoryInterface

@@ -2,11 +2,11 @@
 
 namespace PhpLab\Eloquent\Migration\Services;
 
-use PhpLab\Domain\Base\BaseService;
+use PhpLab\Core\Domain\Base\BaseService;
 use PhpLab\Eloquent\Migration\Interfaces\Repositories\GenerateRepositoryInterface;
 use PhpLab\Eloquent\Migration\Interfaces\Services\GenerateServiceInterface;
 use PhpLab\Eloquent\Migration\Scenarios\Render\CreateTableRender;
-use PhpLab\Sandbox\Common\Helpers\ClassHelper;
+use PhpLab\Core\Common\Helpers\ClassHelper;
 
 class GenerateService extends BaseService implements GenerateServiceInterface
 {

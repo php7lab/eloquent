@@ -5,10 +5,10 @@ namespace PhpLab\Eloquent\Fixture\Repositories;
 use Illuminate\Support\Collection;
 use php7extension\yii\helpers\ArrayHelper;
 use php7extension\yii\helpers\FileHelper;
-use PhpLab\Domain\Base\BaseRepository;
+use PhpLab\Core\Domain\Base\BaseRepository;
 use PhpLab\Eloquent\Fixture\Entities\FixtureEntity;
 use PhpLab\Eloquent\Fixture\Traits\ConfigTrait;
-use PhpLab\Sandbox\Common\Libs\Store\StoreFile;
+use PhpLab\Core\Common\Libs\Store\StoreFile;
 
 class FileRepository extends BaseRepository
 {

@@ -3,8 +3,8 @@
 namespace PhpLab\Eloquent\Db\Helpers;
 
 use Illuminate\Database\Query\Builder;
-use PhpLab\Domain\Data\Query;
-use PhpLab\Domain\Entities\Query\Where;
+use PhpLab\Core\Domain\Data\Query;
+use PhpLab\Core\Domain\Entities\Query\Where;
 
 class QueryBuilderHelper
 {

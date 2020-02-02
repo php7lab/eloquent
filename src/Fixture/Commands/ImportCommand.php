@@ -5,7 +5,7 @@ namespace PhpLab\Eloquent\Fixture\Commands;
 use Illuminate\Database\Eloquent\Collection;
 use php7extension\yii\helpers\ArrayHelper;
 use PhpLab\Eloquent\Fixture\Entities\FixtureEntity;
-use PhpLab\Sandbox\Console\Question\ChoiceQuestion;
+use PhpLab\Core\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 

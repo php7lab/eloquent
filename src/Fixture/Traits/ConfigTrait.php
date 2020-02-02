@@ -2,7 +2,7 @@
 
 namespace PhpLab\Eloquent\Fixture\Traits;
 
-use PhpLab\Sandbox\Common\Libs\Store\StoreFile;
+use PhpLab\Core\Common\Libs\Store\StoreFile;
 
 trait ConfigTrait
 {
