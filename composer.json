@@ -19,11 +19,7 @@
   },
   "autoload": {
     "psr-4": {
-      "PhpLab\\Eloquent\\": "src"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
+      "PhpLab\\Eloquent\\": "src",
       "PhpLab\\Eloquent\\Tests\\": "tests"
     }
   }
