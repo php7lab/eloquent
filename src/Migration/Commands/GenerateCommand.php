@@ -8,7 +8,6 @@ use PhpLab\Eloquent\Migration\Scenarios\Input\BaseInputScenario;
 use PhpLab\Eloquent\Migration\Scenarios\Input\DomainNamespaceInputScenario;
 use PhpLab\Eloquent\Migration\Scenarios\Input\TableNameInputScenario;
 use PhpLab\Eloquent\Migration\Scenarios\Input\TypeInputScenario;
-use PhpLab\Sandbox\Generator\Commands\BaseGeneratorCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
