@@ -9,8 +9,8 @@ use PhpLab\Core\Legacy\Code\entities\InterfaceEntity;
 use PhpLab\Core\Legacy\Code\enums\AccessEnum;
 use PhpLab\Core\Legacy\Code\helpers\ClassHelper;
 use PhpLab\Core\Legacy\Yii\Helpers\FileHelper;
-use PhpLab\Sandbox\Generator\Domain\Helpers\TemplateCodeHelper;
-use PhpLab\Sandbox\Package\Domain\Helpers\PackageHelper;
+use PhpLab\Dev\Generator\Domain\Helpers\TemplateCodeHelper;
+use PhpLab\Dev\Package\Domain\Helpers\PackageHelper;
 use Zend\Code\Generator\FileGenerator;
 
 class CreateTableRender extends BaseRender

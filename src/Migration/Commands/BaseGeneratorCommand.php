@@ -2,8 +2,8 @@
 
 namespace PhpLab\Eloquent\Migration\Commands;
 
-use PhpLab\Sandbox\Generator\Domain\Dto\BuildDto;
-use PhpLab\Sandbox\Generator\Domain\Scenarios\Input\BaseInputScenario;
+use PhpLab\Dev\Generator\Domain\Dto\BuildDto;
+use PhpLab\Dev\Generator\Domain\Scenarios\Input\BaseInputScenario;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
