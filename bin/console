@@ -2,69 +2,13 @@
 <?php
 
 use Symfony\Component\Console\Application;
-use Symfony\Component\Dotenv\Dotenv;
-use PhpLab\Eloquent\Db\Helpers\Manager;
-
-use PhpLab\Eloquent\Fixture\Commands\ImportCommand;
-use PhpLab\Eloquent\Fixture\Commands\ExportCommand;
-use PhpLab\Eloquent\Fixture\Services\FixtureService;
-use PhpLab\Eloquent\Fixture\Repositories\DbRepository;
-use PhpLab\Eloquent\Fixture\Repositories\FileRepository;
-
-use PhpLab\Eloquent\Migration\Services\MigrationService;
-use PhpLab\Eloquent\Migration\Services\GenerateService;
-use PhpLab\Eloquent\Migration\Repositories\File\GenerateRepository;
-use PhpLab\Eloquent\Migration\Repositories\HistoryRepository;
-use PhpLab\Eloquent\Migration\Repositories\SourceRepository;
-use PhpLab\Eloquent\Migration\Commands\UpCommand;
-use PhpLab\Eloquent\Migration\Commands\DownCommand;
-use PhpLab\Eloquent\Migration\Commands\GenerateCommand;
-
-use PhpLab\Eloquent\Db\Commands\DeleteAllTablesCommand;
 
 require __DIR__ . '/../../../autoload.php';
-
-if (!class_exists(Dotenv::class)) {
-    throw new RuntimeException('Please run "composer require symfony/dotenv" to load the ".env" files configuring the application.');
-} else {
-    // load all the .env files
-    (new Dotenv(false))->loadEnv(__DIR__ . '/../../../../.env');
-}
-
-$eloquentConfigFile = $_ENV['ELOQUENT_CONFIG_FILE'];
-$capsule = new Manager(null, $eloquentConfigFile);
+require __DIR__ . '/../../../php7lab/core/src/Libs/Env/bootstrapEnv.php';
 
 // создаем консольное приложение
 $application = new Application;
 
-// создаем сервис "Фикстуры" с внедрением двух репозиториев
-$fixtureService = new FixtureService(new DbRepository($capsule), new FileRepository($eloquentConfigFile));
-
-// создаем и объявляем команду "Экспорт фикстур"
-$exportCommand = new ExportCommand(ExportCommand::getDefaultName(), $fixtureService);
-$application->add($exportCommand);
-
-// создаем и объявляем команду "Импорт фикстур"
-$importCommand = new ImportCommand(ImportCommand::getDefaultName(), $fixtureService);
-$application->add($importCommand);
-
-$migrationService = new MigrationService(new SourceRepository($eloquentConfigFile), new HistoryRepository($capsule));
-$generateService = new GenerateService(new GenerateRepository);
-
-// создаем и объявляем команду "UP"
-$upCommand = new UpCommand(UpCommand::getDefaultName(), $migrationService);
-$application->add($upCommand);
-
-// создаем и объявляем команду "Down"
-$downCommand = new DownCommand(DownCommand::getDefaultName(), $migrationService);
-$application->add($downCommand);
-
-// создаем и объявляем команду "Generate"
-$downCommand = new GenerateCommand(GenerateCommand::getDefaultName(), $generateService);
-$application->add($downCommand);
-
-// создаем и объявляем команду "deleteAllTables"
-$deleteAllTablesCommand = new DeleteAllTablesCommand(DeleteAllTablesCommand::getDefaultName(), $fixtureService);
-$application->add($deleteAllTablesCommand);
+require __DIR__ . '/bootstrap.php';
 
 $application->run();
