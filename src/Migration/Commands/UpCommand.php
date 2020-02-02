@@ -2,7 +2,7 @@
 
 namespace PhpLab\Eloquent\Migration\Commands;
 
-use php7extension\yii\helpers\ArrayHelper;
+use PhpLab\Core\Legacy\Yii\Helpers\ArrayHelper;
 use PhpLab\Core\Console\Helpers\OutputHepler;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

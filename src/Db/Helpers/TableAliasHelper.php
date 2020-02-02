@@ -2,7 +2,7 @@
 
 namespace PhpLab\Eloquent\Db\Helpers;
 
-use php7extension\yii\helpers\ArrayHelper;
+use PhpLab\Core\Legacy\Yii\Helpers\ArrayHelper;
 
 class TableAliasHelper
 {

@@ -3,7 +3,7 @@
 namespace PhpLab\Eloquent\Db\Commands;
 
 use Illuminate\Support\Collection;
-use php7extension\yii\helpers\ArrayHelper;
+use PhpLab\Core\Legacy\Yii\Helpers\ArrayHelper;
 use PhpLab\Eloquent\Fixture\Entities\FixtureEntity;
 use PhpLab\Core\Console\Helpers\OutputHepler;
 use Symfony\Component\Console\Input\InputInterface;

@@ -3,7 +3,7 @@
 namespace PhpLab\Eloquent\Migration\Repositories;
 
 use Illuminate\Database\Schema\Blueprint;
-use php7extension\yii\helpers\ArrayHelper;
+use PhpLab\Core\Legacy\Yii\Helpers\ArrayHelper;
 use PhpLab\Eloquent\Db\Base\BaseEloquentRepository;
 use PhpLab\Eloquent\Migration\Base\BaseCreateTableMigration;
 use PhpLab\Eloquent\Migration\Entities\MigrationEntity;

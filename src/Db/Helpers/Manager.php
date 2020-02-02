@@ -3,8 +3,8 @@
 namespace PhpLab\Eloquent\Db\Helpers;
 
 use Illuminate\Container\Container;
-use php7extension\yii\helpers\ArrayHelper;
-use php7extension\yii\helpers\FileHelper;
+use PhpLab\Core\Legacy\Yii\Helpers\ArrayHelper;
+use PhpLab\Core\Legacy\Yii\Helpers\FileHelper;
 use PhpLab\Eloquent\Fixture\Traits\ConfigTrait;
 
 class Manager extends \Illuminate\Database\Capsule\Manager

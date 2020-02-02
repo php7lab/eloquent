@@ -3,7 +3,7 @@
 namespace PhpLab\Eloquent\Fixture\Commands;
 
 use Illuminate\Database\Eloquent\Collection;
-use php7extension\yii\helpers\ArrayHelper;
+use PhpLab\Core\Legacy\Yii\Helpers\ArrayHelper;
 use PhpLab\Eloquent\Fixture\Entities\FixtureEntity;
 use PhpLab\Core\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Input\InputInterface;

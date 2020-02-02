@@ -2,7 +2,7 @@
 
 namespace PhpLab\Eloquent\Db\Base;
 
-use php7extension\yii\helpers\ArrayHelper;
+use PhpLab\Core\Legacy\Yii\Helpers\ArrayHelper;
 use PhpLab\Core\Domain\Base\BaseEntityWithId;
 use PhpLab\Core\Domain\Data\Query;
 use PhpLab\Core\Domain\Helpers\EntityHelper;

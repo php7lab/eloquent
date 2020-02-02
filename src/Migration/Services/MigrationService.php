@@ -2,7 +2,7 @@
 
 namespace PhpLab\Eloquent\Migration\Services;
 
-use php7extension\yii\helpers\ArrayHelper;
+use PhpLab\Core\Legacy\Yii\Helpers\ArrayHelper;
 use PhpLab\Eloquent\Migration\Entities\MigrationEntity;
 use PhpLab\Eloquent\Migration\Repositories\HistoryRepository;
 use PhpLab\Eloquent\Migration\Repositories\SourceRepository;

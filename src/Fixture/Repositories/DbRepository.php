@@ -6,7 +6,7 @@ use Illuminate\Database\Schema\Builder;
 use Illuminate\Database\Schema\MySqlBuilder;
 use Illuminate\Database\Schema\PostgresBuilder;
 use Illuminate\Support\Collection;
-use php7extension\yii\helpers\ArrayHelper;
+use PhpLab\Core\Legacy\Yii\Helpers\ArrayHelper;
 use PhpLab\Eloquent\Db\Enums\DbDriverEnum;
 use PhpLab\Eloquent\Db\Base\BaseEloquentRepository;
 use PhpLab\Eloquent\Fixture\Entities\FixtureEntity;
