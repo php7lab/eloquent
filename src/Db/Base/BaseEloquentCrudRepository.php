@@ -9,7 +9,7 @@ use PhpLab\Core\Domain\Helpers\EntityHelper;
 use PhpLab\Core\Domain\Interfaces\Repository\CrudRepositoryInterface;
 use PhpLab\Eloquent\Db\Helpers\QueryBuilderHelper;
 use PhpLab\Eloquent\Db\Helpers\QueryFilter;
-use PhpLab\Core\Common\Exceptions\NotFoundException;
+use PhpLab\Core\Exceptions\NotFoundException;
 
 abstract class BaseEloquentCrudRepository extends BaseEloquentRepository implements CrudRepositoryInterface
 {

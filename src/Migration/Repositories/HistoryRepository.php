@@ -7,7 +7,7 @@ use PhpLab\Core\Legacy\Yii\Helpers\ArrayHelper;
 use PhpLab\Eloquent\Db\Base\BaseEloquentRepository;
 use PhpLab\Eloquent\Migration\Base\BaseCreateTableMigration;
 use PhpLab\Eloquent\Migration\Entities\MigrationEntity;
-use PhpLab\Core\Common\Helpers\ClassHelper;
+use PhpLab\Core\Helpers\ClassHelper;
 
 //use PhpLab\Eloquent\Db\Helpers\TableAliasHelper;
 

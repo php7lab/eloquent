@@ -8,7 +8,7 @@ use PhpLab\Core\Legacy\Yii\Helpers\FileHelper;
 use PhpLab\Core\Domain\Base\BaseRepository;
 use PhpLab\Eloquent\Fixture\Entities\FixtureEntity;
 use PhpLab\Eloquent\Fixture\Traits\ConfigTrait;
-use PhpLab\Core\Common\Libs\Store\StoreFile;
+use PhpLab\Core\Libs\Store\StoreFile;
 
 class FileRepository extends BaseRepository
 {

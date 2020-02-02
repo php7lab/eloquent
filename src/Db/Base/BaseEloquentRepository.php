@@ -7,7 +7,7 @@ use Illuminate\Database\Query\Builder;
 use PhpLab\Core\Domain\Base\BaseRepository;
 use PhpLab\Eloquent\Db\Helpers\Manager;
 use PhpLab\Eloquent\Db\Traits\TableNameTrait;
-use PhpLab\Core\Common\Exceptions\NotFoundException;
+use PhpLab\Core\Exceptions\NotFoundException;
 
 abstract class BaseEloquentRepository extends BaseRepository
 {

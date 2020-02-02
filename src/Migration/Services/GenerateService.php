@@ -6,7 +6,7 @@ use PhpLab\Core\Domain\Base\BaseService;
 use PhpLab\Eloquent\Migration\Interfaces\Repositories\GenerateRepositoryInterface;
 use PhpLab\Eloquent\Migration\Interfaces\Services\GenerateServiceInterface;
 use PhpLab\Eloquent\Migration\Scenarios\Render\CreateTableRender;
-use PhpLab\Core\Common\Helpers\ClassHelper;
+use PhpLab\Core\Helpers\ClassHelper;
 
 class GenerateService extends BaseService implements GenerateServiceInterface
 {
