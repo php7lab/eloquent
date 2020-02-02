@@ -3,17 +3,18 @@
 namespace PhpLab\Eloquent\Fixture\Repositories;
 
 use Illuminate\Support\Collection;
+use PhpLab\Core\Domain\Traits\ForgeEntityTrait;
 use PhpLab\Core\Legacy\Yii\Helpers\ArrayHelper;
 use PhpLab\Core\Legacy\Yii\Helpers\FileHelper;
-use PhpLab\Core\Domain\Base\BaseRepository;
 use PhpLab\Eloquent\Fixture\Entities\FixtureEntity;
 use PhpLab\Eloquent\Fixture\Traits\ConfigTrait;
 use PhpLab\Core\Libs\Store\StoreFile;
 
-class FileRepository extends BaseRepository
+class FileRepository
 {
 
     use ConfigTrait;
+    use ForgeEntityTrait;
 
     public $entityClass = FixtureEntity::class;
     public $extension = 'php';

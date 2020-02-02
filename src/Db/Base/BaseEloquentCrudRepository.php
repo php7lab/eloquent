@@ -103,7 +103,7 @@ abstract class BaseEloquentCrudRepository extends BaseEloquentRepository impleme
     private function getColumnsForModify()
     {
         $schema = $this->getSchema();
-        $columnList = $schema->getColumnListing($this->tableName());
+        $columnList = $schema->getColumnListing($this->tableNameAlias());
         if ($this->autoIncrement()) {
             ArrayHelper::removeByValue($this->autoIncrement(), $columnList);
         }

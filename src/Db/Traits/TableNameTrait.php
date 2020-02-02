@@ -10,14 +10,19 @@ trait TableNameTrait
 
     //abstract function getCapsule() : Manager;
 
-    public function connectionName()
+    public function connectionName(): string
     {
         return $this->connectionName;
     }
 
-    public function tableName()
+    public function tableName(): string
     {
-        return $this->encodeTableName($this->tableName);
+        return $this->tableName;
+    }
+
+    public function tableNameAlias(): string
+    {
+        return $this->encodeTableName($this->tableName());
     }
 
     public function encodeTableName(string $sourceTableName): string

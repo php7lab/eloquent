@@ -26,7 +26,7 @@ abstract class BaseCreateTableMigration extends BaseMigration
 
     public function up(Builder $schema)
     {
-        $schema->create($this->tableName(), $this->tableSchema());
+        $schema->create($this->tableNameAlias(), $this->tableSchema());
         if ($this->tableComment) {
             $this->addTableComment($schema);
         }
@@ -34,14 +34,14 @@ abstract class BaseCreateTableMigration extends BaseMigration
 
     public function down(Builder $schema)
     {
-        $schema->dropIfExists($this->tableName());
+        $schema->dropIfExists($this->tableNameAlias());
     }
 
     private function addTableComment(Builder $schema)
     {
         $connection = $schema->getConnection();
         $driver = $connection->getConfig('driver');
-        $table = $this->tableName();
+        $table = $this->tableNameAlias();
         $tableComment = $this->tableComment;
         $sql = '';
         if ($driver == DbDriverEnum::MYSQL) {

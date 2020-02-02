@@ -4,15 +4,16 @@ namespace PhpLab\Eloquent\Db\Base;
 
 use Illuminate\Database\Connection;
 use Illuminate\Database\Query\Builder;
-use PhpLab\Core\Domain\Base\BaseRepository;
+use PhpLab\Core\Domain\Traits\ForgeEntityTrait;
 use PhpLab\Eloquent\Db\Helpers\Manager;
 use PhpLab\Eloquent\Db\Traits\TableNameTrait;
 use PhpLab\Core\Exceptions\NotFoundException;
 
-abstract class BaseEloquentRepository extends BaseRepository
+abstract class BaseEloquentRepository
 {
 
     use TableNameTrait;
+    use ForgeEntityTrait;
 
     protected $autoIncrement = 'id';
     private $capsule;
@@ -41,7 +42,7 @@ abstract class BaseEloquentRepository extends BaseRepository
     protected function getQueryBuilder(): Builder
     {
         $connection = $this->getConnection();
-        $queryBuilder = $connection->table($this->tableName(), null, $this->connectionName());
+        $queryBuilder = $connection->table($this->tableNameAlias(), null, $this->connectionName());
         return $queryBuilder;
     }
 
