@@ -1,10 +1,10 @@
 <?php
 
-namespace PhpLab\Eloquent\Db\Helpers;
+namespace PhpLab\Eloquent\Db\Libs;
 
 use PhpLab\Core\Legacy\Yii\Helpers\ArrayHelper;
 
-class TableAliasHelper
+class TableAlias
 {
 
     private $map = null;

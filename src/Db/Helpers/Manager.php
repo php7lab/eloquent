@@ -5,6 +5,7 @@ namespace PhpLab\Eloquent\Db\Helpers;
 use Illuminate\Container\Container;
 use PhpLab\Core\Legacy\Yii\Helpers\ArrayHelper;
 use PhpLab\Core\Legacy\Yii\Helpers\FileHelper;
+use PhpLab\Eloquent\Db\Libs\TableAlias;
 use PhpLab\Eloquent\Fixture\Traits\ConfigTrait;
 
 class Manager extends \Illuminate\Database\Capsule\Manager
@@ -21,7 +22,7 @@ class Manager extends \Illuminate\Database\Capsule\Manager
         $this->config = $config['connection'];
         $connections = self::getConnections($this->config);
 
-        $this->tableAlias = new TableAliasHelper;
+        $this->tableAlias = new TableAlias;
 
         foreach ($connections as $connectionName => $config) {
             if ( ! isset($config['map'])) {
@@ -33,7 +34,7 @@ class Manager extends \Illuminate\Database\Capsule\Manager
         $this->bootEloquent();
     }
 
-    public function getAlias(): TableAliasHelper
+    public function getAlias(): TableAlias
     {
         return $this->tableAlias;
     }
