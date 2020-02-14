@@ -58,10 +58,8 @@ class Manager extends \Illuminate\Database\Capsule\Manager
                 $connections['default'] = $connections[$defaultConnection];
                 unset($connections[$defaultConnection]);
             }
-        } elseif(!empty($_ENV['DATABASE_URL'])) {
-            $connections = self::getConfigFromDsn($_ENV['DATABASE_URL']);
         } else {
-            $connections = DotEnvHelper::get('db');
+            $connections = DbHelper::getCofigFromEnv();
         }
         foreach ($connections as &$connection) {
             if(!empty($connection['dsn'])) {
@@ -79,15 +77,6 @@ class Manager extends \Illuminate\Database\Capsule\Manager
         return $connections;
     }
 
-    private static function getConfigFromDsn($dsn) {
-        $connectionCofig = DbHelper::parseDsn($dsn);
-        /*if ($connectionCofig['driver'] == 'sqlite') {
-            $connectionCofig['database'] = FileHelper::prepareRootPath($connectionCofig['host']);
-            unset($connectionCofig['host']);
-        }*/
-        $connections = ['default' => $connectionCofig];
-        return $connections;
-    }
 }
 
 
