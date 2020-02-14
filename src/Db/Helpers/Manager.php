@@ -3,8 +3,10 @@
 namespace PhpLab\Eloquent\Db\Helpers;
 
 use Illuminate\Container\Container;
+use PhpLab\Core\Helpers\DbHelper;
 use PhpLab\Core\Legacy\Yii\Helpers\ArrayHelper;
 use PhpLab\Core\Legacy\Yii\Helpers\FileHelper;
+use PhpLab\Core\Libs\Env\DotEnvHelper;
 use PhpLab\Eloquent\Db\Libs\TableAlias;
 use PhpLab\Eloquent\Fixture\Traits\ConfigTrait;
 
@@ -28,6 +30,7 @@ class Manager extends \Illuminate\Database\Capsule\Manager
             if ( ! isset($config['map'])) {
                 $config['map'] = ArrayHelper::getValue($this->config, 'map', []);
             }
+            //print_r($config);die;
             $this->addConnection($config);
             $this->getAlias()->addMap($connectionName, ArrayHelper::getValue($config, 'map', []));
         }
@@ -55,38 +58,36 @@ class Manager extends \Illuminate\Database\Capsule\Manager
                 $connections['default'] = $connections[$defaultConnection];
                 unset($connections[$defaultConnection]);
             }
+        } elseif(!empty($_ENV['DATABASE_URL'])) {
+            $connections = self::getConfigFromDsn($_ENV['DATABASE_URL']);
         } else {
-            $dsn = $_ENV['DATABASE_URL'];
-            //$dsn = preg_replace('#^((?:pdo_)?sqlite?):///#', '$1://localhost/', $dsn);
-            $dsnConfig = parse_url($dsn);
-            $dsnConfig = array_map('rawurldecode', $dsnConfig);
-
-            $connectionCofig = [
-                'driver' => ArrayHelper::getValue($dsnConfig, 'scheme'),
-                'host' => ArrayHelper::getValue($dsnConfig, 'host'),
-                'database' => ArrayHelper::getValue($dsnConfig, 'path'),
-                'username' => ArrayHelper::getValue($dsnConfig, 'user'),
-                'password' => ArrayHelper::getValue($dsnConfig, 'pass'),
-            ];
-            if ($connectionCofig['driver'] == 'sqlite') {
-                $connectionCofig['database'] = FileHelper::prepareRootPath($connectionCofig['host']);
-                unset($connectionCofig['host']);
-            }
-            $connections = ['default' => $connectionCofig];
+            $connections = DotEnvHelper::get('db');
         }
-        //dd($connections);
         foreach ($connections as &$connection) {
-
+            if(!empty($connection['dsn'])) {
+                $connectionFromDsn = DbHelper::parseDsn($connection['dsn']);
+                $connection = array_merge($connectionFromDsn, $connection);
+            }
             if ($connection['driver'] == 'sqlite') {
-                $connection['database'] = FileHelper::prepareRootPath($connection['database']);
+                $connection['database'] = FileHelper::prepareRootPath($connection['database'] ?? null);
                 unset($connection['host']);
             } else {
                 $connection['database'] = trim($connection['database'], '/');
+                $connection['host'] = $connection['host'] ?? '127.0.0.1';
             }
         }
         return $connections;
     }
 
+    private static function getConfigFromDsn($dsn) {
+        $connectionCofig = DbHelper::parseDsn($dsn);
+        /*if ($connectionCofig['driver'] == 'sqlite') {
+            $connectionCofig['database'] = FileHelper::prepareRootPath($connectionCofig['host']);
+            unset($connectionCofig['host']);
+        }*/
+        $connections = ['default' => $connectionCofig];
+        return $connections;
+    }
 }
 
 
