@@ -59,7 +59,7 @@ class Manager extends \Illuminate\Database\Capsule\Manager
                 unset($connections[$defaultConnection]);
             }
         } else {
-            $connections = DbHelper::getCofigFromEnv();
+            $connections = DbHelper::getConfigFromEnv();
         }
         foreach ($connections as &$connection) {
             if(!empty($connection['dsn'])) {
