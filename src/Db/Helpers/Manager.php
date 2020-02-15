@@ -21,16 +21,13 @@ class Manager extends \Illuminate\Database\Capsule\Manager
     {
         parent::__construct($container);
         $config = $this->loadConfig($mainConfigFile);
-        $this->config = $config['connection'] ?? [];
-        $connections = self::getConnections($this->config);
-
         $this->tableAlias = new TableAlias;
-
+        $connections = DbHelper::getConfigFromEnv();
         foreach ($connections as $connectionName => $config) {
             if ( ! isset($config['map'])) {
-                $config['map'] = ArrayHelper::getValue($this->config, 'map', []);
+                $config['map'] = ArrayHelper::getValue(($config['connection'] ?? []), 'map', []);
             }
-            //print_r($config);die;
+            $config['database'] = $config['dbname'];
             $this->addConnection($config);
             $this->getAlias()->addMap($connectionName, ArrayHelper::getValue($config, 'map', []));
         }
@@ -60,6 +57,7 @@ class Manager extends \Illuminate\Database\Capsule\Manager
             }
         } else {
             $connections = DbHelper::getConfigFromEnv();
+            //dd($connections);
         }
         foreach ($connections as &$connection) {
             if(!empty($connection['dsn'])) {
@@ -70,8 +68,8 @@ class Manager extends \Illuminate\Database\Capsule\Manager
                 $connection['database'] = FileHelper::prepareRootPath($connection['database'] ?? null);
                 unset($connection['host']);
             } else {
-                $connection['database'] = trim($connection['database'], '/');
-                $connection['host'] = $connection['host'] ?? '127.0.0.1';
+                //$connection['database'] = trim($connection['database'], '/');
+                //$connection['host'] = $connection['host'] ?? '127.0.0.1';
             }
         }
         return $connections;
