@@ -4,10 +4,23 @@
 
 Откройте файл `.env`.
 
-Добавьте переменную окружения `ELOQUENT_CONFIG_FILE`
+Добавьте переменные окружения
 
-```
+```dotenv
 ELOQUENT_CONFIG_FILE=config/eloquent/main.yaml
+
+DB_DEFAULT_DRIVER=mysql
+DB_DEFAULT_USERNAME=root
+DB_DEFAULT_PASSWORD=
+DB_DEFAULT_DATABASE=my_db
+DB_DEFAULT_CHARSET=utf8
+#DB_DEFAULT_DEFAULT_SCHEMA=public
+```
+
+Вот более краткая форма записи конфигурации:
+
+```dotenv
+DATABASE_URL=mysql://root@127.0.0.1:3306/rocket_highvill_test
 ```
 
 ## Объявление в Symfony
@@ -16,7 +29,7 @@ ELOQUENT_CONFIG_FILE=config/eloquent/main.yaml
 
 Добавьте конфигурацию менеджера соединений:
 
-```
+```yaml
 services:
     PhpLab\Eloquent\Db\Helpers\Manager:
         arguments:

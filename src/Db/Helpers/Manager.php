@@ -21,7 +21,7 @@ class Manager extends \Illuminate\Database\Capsule\Manager
     {
         parent::__construct($container);
         $config = $this->loadConfig($mainConfigFile);
-        $this->config = $config['connection'];
+        $this->config = $config['connection'] ?? [];
         $connections = self::getConnections($this->config);
 
         $this->tableAlias = new TableAlias;

@@ -2,6 +2,7 @@
 
 namespace PhpLab\Eloquent\Migration\Repositories;
 
+use PhpLab\Core\Exceptions\InvalidConfigException;
 use PhpLab\Core\Legacy\Yii\Helpers\ArrayHelper;
 use PhpLab\Core\Legacy\Yii\Helpers\FileHelper;
 use PhpLab\Eloquent\Fixture\Traits\ConfigTrait;
@@ -16,11 +17,17 @@ class SourceRepository
     {
         $config = $this->loadConfig($mainConfigFile);
         $this->config = $config['migrate'];
+        /*if(empty($this->config)) {
+            throw new InvalidConfigException('Empty migrtion configuration!');
+        }*/
     }
 
     public function getAll()
     {
         $directories = $this->config['directory'];
+        if(empty($directories)) {
+            throw new InvalidConfigException('Empty directories configuration for migrtion!');
+        }
         $classes = [];
         foreach ($directories as $dir) {
             $newClasses = self::scanDir(FileHelper::prepareRootPath($dir));
@@ -28,7 +35,6 @@ class SourceRepository
         }
         return $classes;
     }
-
 
     private static function scanDir($dir)
     {

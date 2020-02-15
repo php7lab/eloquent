@@ -4,6 +4,7 @@ namespace PhpLab\Eloquent\Fixture\Repositories;
 
 use Illuminate\Support\Collection;
 use PhpLab\Core\Domain\Traits\ForgeEntityTrait;
+use PhpLab\Core\Exceptions\InvalidConfigException;
 use PhpLab\Core\Legacy\Yii\Helpers\ArrayHelper;
 use PhpLab\Core\Legacy\Yii\Helpers\FileHelper;
 use PhpLab\Eloquent\Fixture\Entities\FixtureEntity;
@@ -23,11 +24,17 @@ class FileRepository
     {
         $config = $this->loadConfig($mainConfigFile);
         $this->config = $config['fixture'];
+        /*if(empty($this->config)) {
+            throw new InvalidConfigException('Empty fixture configuration!');
+        }*/
     }
 
     public function allTables(): Collection
     {
         $array = [];
+        if(empty($this->config['directory'])) {
+            throw new InvalidConfigException('Empty directories configuration for fixtures!');
+        }
         foreach ($this->config['directory'] as $dir) {
             $fixtureArray = $this->scanDir(FileHelper::prepareRootPath($dir));
             $array = ArrayHelper::merge($array, $fixtureArray);
