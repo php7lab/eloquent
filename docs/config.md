@@ -7,20 +7,35 @@
 Добавьте переменные окружения
 
 ```dotenv
-ELOQUENT_CONFIG_FILE=config/eloquent/main.yaml
-
-DB_DEFAULT_DRIVER=mysql
-DB_DEFAULT_USERNAME=root
-DB_DEFAULT_PASSWORD=
-DB_DEFAULT_DATABASE=my_db
-DB_DEFAULT_CHARSET=utf8
+DB_CONNECTION=mysql #DB_CONNECTION | DB_DRIVER
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_USERNAME=root
+DB_PASSWORD=
+DB_DATABASE=symfony-tpl # DB_DATABASE | DB_DBNAME
+DB_CHARSET=utf8
 #DB_DEFAULT_DEFAULT_SCHEMA=public
 ```
 
-Вот более краткая форма записи конфигурации:
+Если каратко, то:
 
 ```dotenv
-DATABASE_URL=mysql://root@127.0.0.1:3306/rocket_highvill_test
+DB_CONNECTION=mysql
+DB_USERNAME=root
+DB_PASSWORD=qwerty
+DB_DATABASE=symfony-tpl
+```
+
+Работает и форма записи Doctrine:
+
+```dotenv
+DATABASE_URL=mysql://root@127.0.0.1:3306/symfony-tpl
+```
+
+Подключаем конфигурацию миграций, фикстур и карты таблиц:
+
+```dotenv
+ELOQUENT_CONFIG_FILE=config/eloquent/main.yaml
 ```
 
 ## Объявление в Symfony
