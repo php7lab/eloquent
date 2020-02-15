@@ -16,7 +16,7 @@ class SourceRepository
     public function __construct($mainConfigFile = null)
     {
         $config = $this->loadConfig($mainConfigFile);
-        $this->config = $config['migrate'];
+        $this->config = $config['migrate'] ?? [];
         /*if(empty($this->config)) {
             throw new InvalidConfigException('Empty migrtion configuration!');
         }*/
