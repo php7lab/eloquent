@@ -23,14 +23,15 @@ class Manager extends \Illuminate\Database\Capsule\Manager
         $config = $this->loadConfig($mainConfigFile);
         $this->tableAlias = new TableAlias;
         $connections = DbHelper::getConfigFromEnv();
-        foreach ($connections as $connectionName => $config) {
-            if ( ! isset($config['map'])) {
-                $config['map'] = ArrayHelper::getValue(($config['connection'] ?? []), 'map', []);
+        foreach ($connections as $connectionName => $connectionConfig) {
+            if ( ! isset($connectionConfig['map'])) {
+                $connectionConfig['map'] = ArrayHelper::getValue($config, 'connection.map', []);
             }
-            $config['database'] = $config['dbname'];
-            $this->addConnection($config);
-            $this->getAlias()->addMap($connectionName, ArrayHelper::getValue($config, 'map', []));
+            $connectionConfig['database'] = $connectionConfig['dbname'];
+            $this->addConnection($connectionConfig);
+            $this->getAlias()->addMap($connectionName, ArrayHelper::getValue($connectionConfig, 'map', []));
         }
+
         $this->bootEloquent();
     }
 
