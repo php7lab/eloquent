@@ -2,6 +2,7 @@
 
 namespace PhpLab\Eloquent\Db\Base;
 
+use PhpLab\Core\Domain\Enums\OperatorEnum;
 use PhpLab\Core\Legacy\Yii\Helpers\ArrayHelper;
 use PhpLab\Core\Domain\Base\BaseEntityWithId;
 use PhpLab\Core\Domain\Libs\Query;
@@ -115,10 +116,8 @@ abstract class BaseEloquentCrudRepository extends BaseEloquentRepository impleme
      */
     public function update(object $entity)
     {
-        $id = $entity->getId();
-        $queryBuilder = $this->getQueryBuilder();
-        $queryBuilder->find($id);
-        $queryBuilder->update(EntityHelper::toArrayForTablize($entity));
+        $entity2 = $this->oneById($entity->getId());
+        $this->updateById($entity->getId(), EntityHelper::toArrayForTablize($entity));
     }
 
     public function updateById($id, $data)
@@ -137,6 +136,15 @@ abstract class BaseEloquentCrudRepository extends BaseEloquentRepository impleme
         $this->oneById($id);
         $queryBuilder = $this->getQueryBuilder();
         $queryBuilder->delete($id);
+    }
+
+    public function deleteByCondition(array $condition)
+    {
+        $queryBuilder = $this->getQueryBuilder();
+        foreach ($condition as $key => $value) {
+            $queryBuilder->where($key, OperatorEnum::EQUAL, $value);
+        }
+        $queryBuilder->delete();
     }
 
 }
