@@ -3,7 +3,8 @@
 namespace PhpLab\Eloquent\Db\Base;
 
 use Illuminate\Database\Connection;
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Query\Builder as QueryBuilder;
+use Illuminate\Database\Schema\Builder as SchemaBuilder;
 use PhpLab\Core\Domain\Traits\ForgeEntityTrait;
 use PhpLab\Eloquent\Db\Helpers\Manager;
 use PhpLab\Eloquent\Db\Traits\TableNameTrait;
@@ -39,28 +40,28 @@ abstract class BaseEloquentRepository
         return $connection;
     }
 
-    protected function getQueryBuilder(): Builder
+    protected function getQueryBuilder(): QueryBuilder
     {
         $connection = $this->getConnection();
         $queryBuilder = $connection->table($this->tableNameAlias(), null, $this->connectionName());
         return $queryBuilder;
     }
 
-    protected function getSchema(string $connectionName = null): \Illuminate\Database\Schema\Builder
+    protected function getSchema(string $connectionName = null): SchemaBuilder
     {
         $connection = $this->getConnection($connectionName);
         $schema = $connection->getSchemaBuilder();
         return $schema;
     }
 
-    protected function allByBuilder(Builder $queryBuilder)
+    protected function allByBuilder(QueryBuilder $queryBuilder)
     {
         $postCollection = $queryBuilder->get();
         $array = $postCollection->toArray();
         return $this->forgeEntityCollection($array);
     }
 
-    protected function oneByBuilder(Builder $queryBuilder)
+    protected function oneByBuilder(QueryBuilder $queryBuilder)
     {
         $item = $queryBuilder->first();
         if (empty($item)) {

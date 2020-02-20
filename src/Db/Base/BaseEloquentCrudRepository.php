@@ -3,8 +3,8 @@
 namespace PhpLab\Eloquent\Db\Base;
 
 use PhpLab\Core\Domain\Enums\OperatorEnum;
+use PhpLab\Core\Domain\Interfaces\Entity\EntityIdInterface;
 use PhpLab\Core\Legacy\Yii\Helpers\ArrayHelper;
-use PhpLab\Core\Domain\Base\BaseEntityWithId;
 use PhpLab\Core\Domain\Libs\Query;
 use PhpLab\Core\Domain\Helpers\EntityHelper;
 use PhpLab\Core\Domain\Interfaces\Repository\CrudRepositoryInterface;
@@ -72,7 +72,7 @@ abstract class BaseEloquentCrudRepository extends BaseEloquentRepository impleme
 
     }
 
-    public function oneById($id, Query $query = null)
+    public function oneById($id, Query $query = null): EntityIdInterface
     {
         $query = $this->forgeQuery($query);
         $query->where('id', $id);
@@ -89,10 +89,7 @@ abstract class BaseEloquentCrudRepository extends BaseEloquentRepository impleme
         return $collection->first();
     }
 
-    /**
-     * @param BaseEntityWithId $entity
-     */
-    public function create($entity)
+    public function create(EntityIdInterface $entity)
     {
         $columnList = $this->getColumnsForModify();
         $arraySnakeCase = EntityHelper::toArrayForTablize($entity, $columnList);
@@ -111,10 +108,7 @@ abstract class BaseEloquentCrudRepository extends BaseEloquentRepository impleme
         return $columnList;
     }
 
-    /**
-     * @param BaseEntityWithId $entity
-     */
-    public function update(object $entity)
+    public function update(EntityIdInterface $entity)
     {
         $entity2 = $this->oneById($entity->getId());
         $this->updateById($entity->getId(), EntityHelper::toArrayForTablize($entity));
