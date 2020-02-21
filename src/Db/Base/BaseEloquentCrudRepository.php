@@ -116,18 +116,28 @@ abstract class BaseEloquentCrudRepository extends BaseEloquentRepository impleme
         return $columnList;
     }
 
+    /*public function persist(EntityIdInterface $entity)
+    {
+
+    }*/
+
     public function update(EntityIdInterface $entity)
     {
-        $entity2 = $this->oneById($entity->getId());
-        $this->updateById($entity->getId(), EntityHelper::toArrayForTablize($entity));
+        $this->oneById($entity->getId());
+        $data = EntityHelper::toArrayForTablize($entity);
+        $this->updateQuery($entity->getId(), $data);
+        //$this->updateById($entity->getId(), $data);
     }
 
-    public function updateById($id, $data)
+    /*public function updateById($id, $data)
     {
+        $this->oneById($id);
+        $this->updateQuery($id, $data);
+    }*/
+
+    private function updateQuery($id, array $data) {
         $columnList = $this->getColumnsForModify();
         $data = ArrayHelper::extractByKeys($data, $columnList);
-        $entity = $this->oneById($id);
-        EntityHelper::setAttributes($entity, $data);
         $queryBuilder = $this->getQueryBuilder();
         $queryBuilder->find($id);
         $queryBuilder->update($data);
