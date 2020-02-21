@@ -2,7 +2,10 @@
 
 namespace PhpLab\Eloquent\Db\Base;
 
+use Illuminate\Database\QueryException;
+use PhpLab\Core\Domain\Entities\ValidateErrorEntity;
 use PhpLab\Core\Domain\Enums\OperatorEnum;
+use PhpLab\Core\Domain\Exceptions\UnprocessibleEntityException;
 use PhpLab\Core\Domain\Interfaces\Entity\EntityIdInterface;
 use PhpLab\Core\Legacy\Yii\Helpers\ArrayHelper;
 use PhpLab\Core\Domain\Libs\Query;
@@ -69,7 +72,6 @@ abstract class BaseEloquentCrudRepository extends BaseEloquentRepository impleme
         $collection = $this->_all($queryWithoutRelations);
         $collection = $queryFilter->loadRelations($collection);
         return $collection;
-
     }
 
     public function oneById($id, Query $query = null): EntityIdInterface
@@ -94,8 +96,14 @@ abstract class BaseEloquentCrudRepository extends BaseEloquentRepository impleme
         $columnList = $this->getColumnsForModify();
         $arraySnakeCase = EntityHelper::toArrayForTablize($entity, $columnList);
         $queryBuilder = $this->getQueryBuilder();
-        $lastId = $queryBuilder->insertGetId($arraySnakeCase);
-        $entity->setId($lastId);
+        try {
+            $lastId = $queryBuilder->insertGetId($arraySnakeCase);
+            $entity->setId($lastId);
+        } catch (QueryException $e) {
+            $errors = new UnprocessibleEntityException;
+            $errors->add('', 'Already exists!');
+            throw $errors;
+        }
     }
 
     private function getColumnsForModify()
