@@ -66,7 +66,10 @@ class FixtureFactoryHelper
     {
         $collection = [];
         for ($index = $this->startIndex; $index <= $this->count; $index = $index + $this->step) {
-            $collection[] = $this->generateItem($index);
+            $item = $this->generateItem($index);
+            if($item) {
+                $collection[] = $item;
+            }
         }
         return $collection;
     }
