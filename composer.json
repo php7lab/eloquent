@@ -10,7 +10,6 @@
   ],
   "minimum-stability": "dev",
   "require": {
-    "symfony/orm-pack": "^1.0",
     "illuminate/database": "^6.3"
   },
   "autoload": {
