@@ -1,3 +1,3 @@
 # Eloquent
 
-* [Документация](/docs/README.md)
+* [Документация](./docs/README.md)
