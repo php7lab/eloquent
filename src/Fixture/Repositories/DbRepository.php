@@ -6,6 +6,7 @@ use Illuminate\Database\Schema\Builder;
 use Illuminate\Database\Schema\MySqlBuilder;
 use Illuminate\Database\Schema\PostgresBuilder;
 use Illuminate\Support\Collection;
+use PhpLab\Core\Domain\Helpers\EntityHelper;
 use PhpLab\Core\Legacy\Yii\Helpers\ArrayHelper;
 use PhpLab\Eloquent\Db\Enums\DbDriverEnum;
 use PhpLab\Eloquent\Db\Base\BaseEloquentRepository;
@@ -14,7 +15,10 @@ use PhpLab\Eloquent\Fixture\Entities\FixtureEntity;
 class DbRepository extends BaseEloquentRepository
 {
 
-    public $entityClass = FixtureEntity::class;
+    public function getEntityClass(): string
+    {
+        return FixtureEntity::class;
+    }
 
     public function __construct(\PhpLab\Eloquent\Db\Helpers\Manager $capsule)
     {
@@ -86,9 +90,14 @@ class DbRepository extends BaseEloquentRepository
             $key = 'Tables_in_' . $dbName;
             $targetTableName = $item->{$key};
             $sourceTableName = $tableAlias->decode('default', $targetTableName);
-            $entity = $this->forgeEntity([
+
+            $entityClass = $this->getEntityClass();
+            $entity = EntityHelper::createEntity($entityClass, [
                 'name' => $sourceTableName,
             ]);
+
+            //$entity = $this->forgeEntity();
+
             $collection->add($entity);
         }
         return $collection;

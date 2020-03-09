@@ -18,6 +18,11 @@ class HistoryRepository extends BaseEloquentRepository
 
     protected $tableName = self::MIGRATION_TABLE_NAME;
 
+    public function getEntityClass(): string
+    {
+        return MigrationEntity::class;
+    }
+
     public static function filterVersion(array $sourceCollection, array $historyCollection)
     {
         /**
@@ -95,7 +100,8 @@ class HistoryRepository extends BaseEloquentRepository
         $array = $queryBuilder->get()->toArray();
         $collection = [];
         foreach ($array as $item) {
-            $entity = new MigrationEntity;
+            $entityClass = $this->getEntityClass();
+            $entity = new $entityClass;
             $entity->version = $item->version;
             //$entity->className = $className;
             $collection[] = $entity;

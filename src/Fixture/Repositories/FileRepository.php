@@ -3,21 +3,21 @@
 namespace PhpLab\Eloquent\Fixture\Repositories;
 
 use Illuminate\Support\Collection;
-use PhpLab\Core\Domain\Traits\ForgeEntityTrait;
+use PhpLab\Core\Domain\Helpers\EntityHelper;
+use PhpLab\Core\Domain\Interfaces\GetEntityClassInterface;
+use PhpLab\Core\Domain\Interfaces\Repository\RepositoryInterface;
 use PhpLab\Core\Exceptions\InvalidConfigException;
 use PhpLab\Core\Legacy\Yii\Helpers\ArrayHelper;
 use PhpLab\Core\Legacy\Yii\Helpers\FileHelper;
+use PhpLab\Core\Libs\Store\StoreFile;
 use PhpLab\Eloquent\Fixture\Entities\FixtureEntity;
 use PhpLab\Eloquent\Fixture\Traits\ConfigTrait;
-use PhpLab\Core\Libs\Store\StoreFile;
 
-class FileRepository
+class FileRepository implements RepositoryInterface, GetEntityClassInterface
 {
 
     use ConfigTrait;
-    use ForgeEntityTrait;
 
-    public $entityClass = FixtureEntity::class;
     public $extension = 'php';
 
     public function __construct($mainConfigFile = null)
@@ -29,18 +29,26 @@ class FileRepository
         }*/
     }
 
+    public function getEntityClass(): string
+    {
+        return FixtureEntity::class;
+    }
+
     public function allTables(): Collection
     {
         $array = [];
-        if(empty($this->config['directory'])) {
+        if (empty($this->config['directory'])) {
             throw new InvalidConfigException('Empty directories configuration for fixtures!');
         }
         foreach ($this->config['directory'] as $dir) {
             $fixtureArray = $this->scanDir(FileHelper::prepareRootPath($dir));
             $array = ArrayHelper::merge($array, $fixtureArray);
         }
-        $collection = $this->forgeEntityCollection($array);
-        return $collection;
+        //$collection = $this->forgeEntityCollection($array);
+        //return $collection;
+
+        $entityClass = $this->getEntityClass();
+        return EntityHelper::createEntityCollection($entityClass, $array);
     }
 
     public function saveData($name, Collection $collection)
@@ -60,13 +68,18 @@ class FileRepository
         $collection = $this->allTables();
         $collection = $collection->where('name', '=', $name);
         if ($collection->count() < 1) {
-            return $this->forgeEntity([
+
+            $entityClass = $this->getEntityClass();
+            return EntityHelper::createEntity($entityClass, [
                 'name' => $name,
                 'fileName' => $this->config['directory']['default'] . '/' . $name . '.' . $this->extension,
             ]);
+
+            //return $this->forgeEntity();
         }
 
-        return $this->forgeEntity($collection->first());
+        $entityClass = $this->getEntityClass();
+        return EntityHelper::createEntity($entityClass, $collection->first());
     }
 
     private function getStoreInstance(string $name): StoreFile

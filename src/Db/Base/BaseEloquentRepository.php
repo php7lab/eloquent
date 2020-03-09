@@ -5,16 +5,15 @@ namespace PhpLab\Eloquent\Db\Base;
 use Illuminate\Database\Connection;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Schema\Builder as SchemaBuilder;
-use PhpLab\Core\Domain\Traits\ForgeEntityTrait;
-use PhpLab\Core\Exceptions\NotFoundException;
+use PhpLab\Core\Domain\Helpers\EntityHelper;
+use PhpLab\Core\Domain\Interfaces\GetEntityClassInterface;
 use PhpLab\Eloquent\Db\Helpers\Manager;
 use PhpLab\Eloquent\Db\Traits\TableNameTrait;
 
-abstract class BaseEloquentRepository
+abstract class BaseEloquentRepository implements GetEntityClassInterface
 {
 
     use TableNameTrait;
-    use ForgeEntityTrait;
 
     protected $autoIncrement = 'id';
     private $capsule;
@@ -58,16 +57,24 @@ abstract class BaseEloquentRepository
     {
         $postCollection = $queryBuilder->get();
         $array = $postCollection->toArray();
-        return $this->forgeEntityCollection($array);
+        //return $this->forgeEntityCollection($array);
+
+        $entityClass = $this->getEntityClass();
+        return EntityHelper::createEntityCollection($entityClass, $array);
     }
 
-    protected function oneByBuilder(QueryBuilder $queryBuilder)
+    /*public function getEntityClass(): string
+    {
+        return $this->entityClass;
+    }*/
+
+    /*protected function oneByBuilder(QueryBuilder $queryBuilder)
     {
         $item = $queryBuilder->first();
         if (empty($item)) {
             throw new NotFoundException('Not found entity!');
         }
         return $this->forgeEntity($item);
-    }
+    }*/
 
 }

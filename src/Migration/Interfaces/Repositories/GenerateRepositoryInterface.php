@@ -2,9 +2,9 @@
 
 namespace PhpLab\Eloquent\Migration\Interfaces\Repositories;
 
-interface GenerateRepositoryInterface
+use PhpLab\Core\Domain\Interfaces\GetEntityClassInterface;
+
+interface GenerateRepositoryInterface extends GetEntityClassInterface
 {
 
-
 }
-
