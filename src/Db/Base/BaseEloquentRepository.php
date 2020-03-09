@@ -6,9 +6,9 @@ use Illuminate\Database\Connection;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Schema\Builder as SchemaBuilder;
 use PhpLab\Core\Domain\Traits\ForgeEntityTrait;
+use PhpLab\Core\Exceptions\NotFoundException;
 use PhpLab\Eloquent\Db\Helpers\Manager;
 use PhpLab\Eloquent\Db\Traits\TableNameTrait;
-use PhpLab\Core\Exceptions\NotFoundException;
 
 abstract class BaseEloquentRepository
 {

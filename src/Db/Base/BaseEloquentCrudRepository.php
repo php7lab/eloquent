@@ -3,17 +3,16 @@
 namespace PhpLab\Eloquent\Db\Base;
 
 use Illuminate\Database\QueryException;
-use PhpLab\Core\Domain\Entities\ValidateErrorEntity;
 use PhpLab\Core\Domain\Enums\OperatorEnum;
 use PhpLab\Core\Domain\Exceptions\UnprocessibleEntityException;
-use PhpLab\Core\Domain\Interfaces\Entity\EntityIdInterface;
-use PhpLab\Core\Legacy\Yii\Helpers\ArrayHelper;
-use PhpLab\Core\Domain\Libs\Query;
 use PhpLab\Core\Domain\Helpers\EntityHelper;
+use PhpLab\Core\Domain\Interfaces\Entity\EntityIdInterface;
 use PhpLab\Core\Domain\Interfaces\Repository\CrudRepositoryInterface;
+use PhpLab\Core\Domain\Libs\Query;
+use PhpLab\Core\Exceptions\NotFoundException;
+use PhpLab\Core\Legacy\Yii\Helpers\ArrayHelper;
 use PhpLab\Eloquent\Db\Helpers\QueryBuilderHelper;
 use PhpLab\Eloquent\Db\Helpers\QueryFilter;
-use PhpLab\Core\Exceptions\NotFoundException;
 
 abstract class BaseEloquentCrudRepository extends BaseEloquentRepository implements CrudRepositoryInterface
 {
@@ -135,7 +134,8 @@ abstract class BaseEloquentCrudRepository extends BaseEloquentRepository impleme
         $this->updateQuery($id, $data);
     }*/
 
-    private function updateQuery($id, array $data) {
+    private function updateQuery($id, array $data)
+    {
         $columnList = $this->getColumnsForModify();
         $data = ArrayHelper::extractByKeys($data, $columnList);
         $queryBuilder = $this->getQueryBuilder();
