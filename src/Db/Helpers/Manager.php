@@ -9,8 +9,9 @@ use PhpLab\Core\Legacy\Yii\Helpers\FileHelper;
 use PhpLab\Core\Libs\Env\DotEnvHelper;
 use PhpLab\Eloquent\Db\Libs\TableAlias;
 use PhpLab\Eloquent\Fixture\Traits\ConfigTrait;
+use Illuminate\Database\Capsule\Manager as CapsuleManager;
 
-class Manager extends \Illuminate\Database\Capsule\Manager
+class Manager extends CapsuleManager
 {
 
     use ConfigTrait;
