@@ -100,7 +100,15 @@ abstract class BaseEloquentCrudRepository extends BaseEloquentRepository impleme
             $entity->setId($lastId);
         } catch (QueryException $e) {
             $errors = new UnprocessibleEntityException;
-            $errors->add('', 'Already exists!');
+            if($_ENV['APP_DEBUG']) {
+                $message = $e->getMessage();
+                $message = preg_replace('/(\s+)/i', ' ', $message);
+                $message = str_replace("'", "\\'", $message);
+                $message = trim($message);
+            } else {
+                $message = 'Database error!';
+            }
+            $errors->add('', $message);
             throw $errors;
         }
     }
