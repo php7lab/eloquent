@@ -33,12 +33,13 @@ class GenerateCommand extends BaseGeneratorCommand
             ->setHelp('This command generate migration...');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('<fg=white># Migration generate </>');
         $dto = new \stdClass();
         $this->input($input, $output, $dto);
         $this->generateService->generate($dto);
+        return 0;
     }
 
     private function input(InputInterface $input, OutputInterface $output, object $dto)

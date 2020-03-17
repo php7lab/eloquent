@@ -22,14 +22,14 @@ class DownCommand extends BaseCommand
             ->setHelp('This command down all migrations...');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('<fg=white># Migrate DOWN</>');
 
         $historyCollection = $this->migrationService->allForDown();
         if (empty($historyCollection)) {
             $output->writeln(['', '<fg=magenta>- No applied migrations found! -</>', '']);
-            return;
+            return 0;
         }
 
         $withConfirm = $input->getOption('withConfirm');
@@ -42,7 +42,7 @@ class DownCommand extends BaseCommand
         }
 
         if ( ! $this->isContinueQuestion('Down migrations?', $input, $output)) {
-            return;
+            return 0;
         }
 
         $outputInfoCallback = function ($version) use ($output) {
@@ -51,6 +51,7 @@ class DownCommand extends BaseCommand
         $output->writeln('');
         $this->runMigrate($historyCollection, 'down', $outputInfoCallback);
         $output->writeln(['', '<fg=green>Migrate DOWN success!</>', '']);
+        return 0;
     }
 
 }

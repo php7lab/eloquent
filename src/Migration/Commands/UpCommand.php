@@ -22,14 +22,14 @@ class UpCommand extends BaseCommand
             ->setHelp('This command up all migrations...');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln(['<fg=white># Migrate UP</>']);
 
         $filteredCollection = $this->migrationService->allForUp();
         if (empty($filteredCollection)) {
             $output->writeln(['', '<fg=magenta>- Migrations up to date! -</>', '']);
-            return;
+            return 0;
         }
 
         $withConfirm = $input->getOption('withConfirm');
@@ -42,7 +42,7 @@ class UpCommand extends BaseCommand
         }
 
         if ( ! $this->isContinueQuestion('Apply migrations?', $input, $output)) {
-            return;
+            return 0;
         }
 
         $outputInfoCallback = function ($version) use ($output) {
@@ -51,6 +51,7 @@ class UpCommand extends BaseCommand
         $output->writeln('');
         $this->runMigrate($filteredCollection, 'up', $outputInfoCallback);
         $output->writeln(['', '<fg=green>Migrate UP success!</>', '']);
+        return 0;
     }
 
 }
