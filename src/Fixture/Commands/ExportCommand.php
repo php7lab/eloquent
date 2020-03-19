@@ -24,7 +24,7 @@ class ExportCommand extends BaseCommand
             ->setHelp('...');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('<fg=white># Fixture EXPORT</>');
 
@@ -35,7 +35,7 @@ class ExportCommand extends BaseCommand
             $output->writeln('');
             $output->writeln('<fg=magenta>No tables in database!</>');
             $output->writeln('');
-            return;
+            return 0;
         }
 
         $withConfirm = $input->getOption('withConfirm');
@@ -62,6 +62,7 @@ class ExportCommand extends BaseCommand
         }
 
         $output->writeln(['', '<fg=green>Fixture EXPORT success!</>', '']);
+        return 0;
     }
 
 }

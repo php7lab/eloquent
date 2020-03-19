@@ -24,7 +24,7 @@ class DeleteAllTablesCommand extends BaseCommand
             ->setHelp('...');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln(['<fg=white># DELETE all tables</>']);
 
@@ -33,7 +33,7 @@ class DeleteAllTablesCommand extends BaseCommand
 
         if (empty($tableCollection->count())) {
             $output->writeln(['', '<fg=magenta>- No tables -</>', '']);
-            return;
+            return 0;
         }
 
         $withConfirm = $input->getOption('withConfirm');
@@ -46,7 +46,7 @@ class DeleteAllTablesCommand extends BaseCommand
         }
 
         if ( ! $this->isContinueQuestion('Sure DELETE all tables?', $input, $output)) {
-            return;
+            return 0;
         }
 
         $output->writeln('');
@@ -59,6 +59,7 @@ class DeleteAllTablesCommand extends BaseCommand
         //$this->fixtureService->dropAllTables();
 
         $output->writeln(['', '<fg=green>DELETE all tables success!</>', '']);
+        return 0;
     }
 
 }

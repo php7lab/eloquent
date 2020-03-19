@@ -63,8 +63,11 @@ class DbRepository extends BaseEloquentRepository
         $connection = $this->getConnection();
         $queryBuilder = $connection->table($targetTableName);
         $queryBuilder->truncate();
-        $data = ArrayHelper::toArray($collection);
-        $queryBuilder->insert($data);
+        $chunks = $collection->chunk(200);
+        foreach ($chunks as $chunk) {
+            $data = ArrayHelper::toArray($chunk);
+            $queryBuilder->insert($data);
+        }
         $this->resetAutoIncrement($name);
     }
 
@@ -84,21 +87,29 @@ class DbRepository extends BaseEloquentRepository
         /* @var Builder|MySqlBuilder|PostgresBuilder $schema */
         $schema = $this->getSchema();
         $dbName = $schema->getConnection()->getDatabaseName();
-        $array = $schema->getAllTables();
         $collection = new Collection;
-        foreach ($array as $item) {
-            $key = 'Tables_in_' . $dbName;
-            $targetTableName = $item->{$key};
-            $sourceTableName = $tableAlias->decode('default', $targetTableName);
-
-            $entityClass = $this->getEntityClass();
-            $entity = EntityHelper::createEntity($entityClass, [
-                'name' => $sourceTableName,
-            ]);
-
-            //$entity = $this->forgeEntity();
-
-            $collection->add($entity);
+        if($schema->getConnection()->getDriverName() == DbDriverEnum::SQLITE) {
+            $array = $schema->getConnection()->getPdo()->query('SELECT name FROM sqlite_master WHERE type=\'table\'')->fetchAll(\PDO::FETCH_COLUMN);
+            foreach ($array as $targetTableName) {
+                $sourceTableName = $tableAlias->decode('default', $targetTableName);
+                $entityClass = $this->getEntityClass();
+                $entity = EntityHelper::createEntity($entityClass, [
+                    'name' => $sourceTableName,
+                ]);
+                $collection->add($entity);
+            }
+        } else {
+            $array = $schema->getAllTables();
+            foreach ($array as $item) {
+                $key = 'Tables_in_' . $dbName;
+                $targetTableName = $item->{$key};
+                $sourceTableName = $tableAlias->decode('default', $targetTableName);
+                $entityClass = $this->getEntityClass();
+                $entity = EntityHelper::createEntity($entityClass, [
+                    'name' => $sourceTableName,
+                ]);
+                $collection->add($entity);
+            }
         }
         return $collection;
     }

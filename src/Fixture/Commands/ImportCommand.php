@@ -24,7 +24,7 @@ class ImportCommand extends BaseCommand
             ->setHelp('...');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('<fg=white># Fixture IMPORT</>');
 
@@ -54,6 +54,7 @@ class ImportCommand extends BaseCommand
         }
 
         $output->writeln(['', '<fg=green>Fixture IMPORT success!</>', '']);
+        return 0;
     }
 
 }
