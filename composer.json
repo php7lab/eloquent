@@ -10,7 +10,8 @@
   ],
   "minimum-stability": "dev",
   "require": {
-    "illuminate/database": "^6.3"
+    "illuminate/database": "^6.3",
+    "php7lab/core": "v0.0.4"
   },
   "autoload": {
     "psr-4": {
