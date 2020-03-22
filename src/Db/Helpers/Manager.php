@@ -7,6 +7,7 @@ use PhpLab\Core\Helpers\DbHelper;
 use PhpLab\Core\Legacy\Yii\Helpers\ArrayHelper;
 use PhpLab\Core\Legacy\Yii\Helpers\FileHelper;
 use PhpLab\Core\Libs\Env\DotEnvHelper;
+use PhpLab\Eloquent\Db\Enums\DbDriverEnum;
 use PhpLab\Eloquent\Db\Libs\TableAlias;
 use PhpLab\Eloquent\Fixture\Traits\ConfigTrait;
 use Illuminate\Database\Capsule\Manager as CapsuleManager;
@@ -29,10 +30,12 @@ class Manager extends CapsuleManager
                 $connectionConfig['map'] = ArrayHelper::getValue($config, 'connection.map', []);
             }
             $connectionConfig['database'] = $connectionConfig['dbname'];
+            if($connectionConfig['driver'] == DbDriverEnum::SQLITE) {
+                FileHelper::touch($connectionConfig['database']);
+            }
             $this->addConnection($connectionConfig);
             $this->getAlias()->addMap($connectionName, ArrayHelper::getValue($connectionConfig, 'map', []));
         }
-
         $this->bootEloquent();
     }
 
