@@ -2,6 +2,7 @@
 
 namespace PhpLab\Eloquent\Migration\Commands;
 
+use PhpLab\Core\Console\Widgets\LogWidget;
 use PhpLab\Eloquent\Migration\Entities\MigrationEntity;
 use PhpLab\Eloquent\Migration\Services\MigrationService;
 use Symfony\Component\Console\Command\Command;
@@ -49,16 +50,19 @@ abstract class BaseCommand extends Command
         return $helper->ask($input, $output, $question);
     }
 
-    protected function runMigrate($collection, $method, $outputInfoCallback)
+    protected function runMigrate($collection, $method, OutputInterface $output)
     {
+        $logWidget = new LogWidget($output);
         /** @var MigrationEntity[] $collection */
         foreach ($collection as $migrationEntity) {
+            $logWidget->start($migrationEntity->version);
             if ($method == 'up') {
                 $this->migrationService->upMigration($migrationEntity);
             } else {
                 $this->migrationService->downMigration($migrationEntity);
             }
-            call_user_func($outputInfoCallback, $migrationEntity->version);
+            $logWidget->finishSuccess();
+            //call_user_func($outputInfoCallback, $migrationEntity->version);
         }
     }
 

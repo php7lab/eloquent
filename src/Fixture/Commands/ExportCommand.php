@@ -3,6 +3,7 @@
 namespace PhpLab\Eloquent\Fixture\Commands;
 
 use Illuminate\Support\Collection;
+use PhpLab\Core\Console\Widgets\LogWidget;
 use PhpLab\Core\Domain\Helpers\EntityHelper;
 use PhpLab\Eloquent\Fixture\Entities\FixtureEntity;
 use PhpLab\Core\Console\Question\ChoiceQuestion;
@@ -56,9 +57,12 @@ class ExportCommand extends BaseCommand
 
         $output->writeln('');
 
+        $logWidget = new LogWidget($output);
+
         foreach ($selectedTables as $tableName) {
+            $logWidget->start(' ' . $tableName);
             $this->fixtureService->exportTable($tableName);
-            $output->writeln(' ' . $tableName);
+            $logWidget->finishSuccess();
         }
 
         $output->writeln(['', '<fg=green>Fixture EXPORT success!</>', '']);

@@ -3,6 +3,7 @@
 namespace PhpLab\Eloquent\Fixture\Commands;
 
 use Illuminate\Database\Eloquent\Collection;
+use PhpLab\Core\Console\Widgets\LogWidget;
 use PhpLab\Core\Legacy\Yii\Helpers\ArrayHelper;
 use PhpLab\Eloquent\Fixture\Entities\FixtureEntity;
 use PhpLab\Core\Console\Question\ChoiceQuestion;
@@ -48,9 +49,12 @@ class ImportCommand extends BaseCommand
 
         $output->writeln('');
 
+        $logWidget = new LogWidget($output);
+
         foreach ($selectedTables as $tableName) {
+            $logWidget->start(' ' . $tableName);
             $this->fixtureService->importTable($tableName);
-            $output->writeln(' ' . $tableName);
+            $logWidget->finishSuccess();
         }
 
         $output->writeln(['', '<fg=green>Fixture IMPORT success!</>', '']);

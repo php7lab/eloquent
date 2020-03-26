@@ -49,7 +49,7 @@ class UpCommand extends BaseCommand
             $output->writeln(' ' . $version);
         };
         $output->writeln('');
-        $this->runMigrate($filteredCollection, 'up', $outputInfoCallback);
+        $this->runMigrate($filteredCollection, 'up', $output);
         $output->writeln(['', '<fg=green>Migrate UP success!</>', '']);
         return 0;
     }

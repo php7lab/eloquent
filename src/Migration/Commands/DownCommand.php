@@ -49,7 +49,7 @@ class DownCommand extends BaseCommand
             $output->writeln(' ' . $version);
         };
         $output->writeln('');
-        $this->runMigrate($historyCollection, 'down', $outputInfoCallback);
+        $this->runMigrate($historyCollection, 'down', $output);
         $output->writeln(['', '<fg=green>Migrate DOWN success!</>', '']);
         return 0;
     }

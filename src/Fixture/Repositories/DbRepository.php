@@ -63,7 +63,7 @@ class DbRepository extends BaseEloquentRepository
         $connection = $this->getConnection();
         $queryBuilder = $connection->table($targetTableName);
         $queryBuilder->truncate();
-        $chunks = $collection->chunk(200);
+        $chunks = $collection->chunk(150);
         foreach ($chunks as $chunk) {
             $data = ArrayHelper::toArray($chunk);
             $queryBuilder->insert($data);
