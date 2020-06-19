@@ -26,6 +26,7 @@ class Manager extends CapsuleManager
         $this->tableAlias = new TableAlias;
         $connections = DbHelper::getConfigFromEnv();
         foreach ($connections as $connectionName => $connectionConfig) {
+            //dd($connectionConfig);
             if ( ! isset($connectionConfig['map'])) {
                 $connectionConfig['map'] = ArrayHelper::getValue($config, 'connection.map', []);
             }
