@@ -4,6 +4,7 @@ namespace PhpLab\Eloquent\Fixture\Commands;
 
 use Illuminate\Database\Eloquent\Collection;
 use PhpLab\Core\Console\Widgets\LogWidget;
+use PhpLab\Core\Domain\Helpers\EntityHelper;
 use PhpLab\Core\Legacy\Yii\Helpers\ArrayHelper;
 use PhpLab\Eloquent\Fixture\Entities\FixtureEntity;
 use PhpLab\Core\Console\Question\ChoiceQuestion;
@@ -31,9 +32,9 @@ class ImportCommand extends BaseCommand
 
         /** @var FixtureEntity[]|Collection $tableCollection */
         $tableCollection = $this->fixtureService->allFixtures();
+        $tableArray = EntityHelper::getColumn($tableCollection, 'name');
 
         $withConfirm = $input->getOption('withConfirm');
-        $tableArray = ArrayHelper::getColumn($tableCollection->toArray(), 'name');
         if ($withConfirm) {
             $output->writeln('');
             $question = new ChoiceQuestion(
@@ -51,11 +52,11 @@ class ImportCommand extends BaseCommand
 
         $logWidget = new LogWidget($output);
 
-        foreach ($selectedTables as $tableName) {
+        $this->fixtureService->importAll($selectedTables, function ($tableName) use($logWidget) {
             $logWidget->start(' ' . $tableName);
-            $this->fixtureService->importTable($tableName);
+        }, function ($tableName) use($logWidget) {
             $logWidget->finishSuccess();
-        }
+        });
 
         $output->writeln(['', '<fg=green>Fixture IMPORT success!</>', '']);
         return 0;

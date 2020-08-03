@@ -121,7 +121,11 @@ class DbRepository extends BaseEloquentRepository
         $connection = $this->getConnection();
         $queryBuilder = $connection->table($targetTableName);
         $driver = $this->getConnection()->getConfig('driver');
-        if ($driver == DbDriverEnum::PGSQL) {
+
+        /* @var Builder|MySqlBuilder|PostgresBuilder $schema */
+        $schema = $this->getSchema();
+
+        if ($driver == DbDriverEnum::PGSQL && $schema->hasColumn($name, 'id')) {
             $max = $queryBuilder->max('id');
             if ($max) {
                 $pkName = 'id';

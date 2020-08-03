@@ -3,6 +3,9 @@
 namespace PhpLab\Eloquent\Fixture\Services;
 
 use Illuminate\Support\Collection;
+use PhpLab\Core\Domain\Helpers\EntityHelper;
+use PhpLab\Eloquent\Fixture\Entities\FixtureEntity;
+use PhpLab\Eloquent\Fixture\Libs\DataFixture;
 use PhpLab\Eloquent\Fixture\Repositories\DbRepository;
 use PhpLab\Eloquent\Fixture\Repositories\FileRepository;
 use PhpLab\Eloquent\Migration\Repositories\HistoryRepository;
@@ -10,6 +13,7 @@ use PhpLab\Eloquent\Migration\Repositories\HistoryRepository;
 class FixtureService
 {
 
+    private $loadedFixtures = [];
     private $dbRepository;
     private $fileRepository;
     private $excludeNames = [
@@ -52,10 +56,37 @@ class FixtureService
         $this->dbRepository->deleteTable($name);
     }
 
-    public function importTable($name)
+    public function importAll(array $selectedTables, callable $beforeOutput = null, callable $afterOutput = null) {
+        /** @var FixtureEntity[]|\Illuminate\Database\Eloquent\Collection $tableCollection */
+        $tableCollection = $this->allFixtures();
+        $tableCollection = EntityHelper::indexingCollection($tableCollection, 'name');
+
+        foreach ($selectedTables as $tableName) {
+            $this->importTable($tableName, $beforeOutput, $afterOutput, $tableCollection);
+        }
+    }
+
+    public function importTable($tableName, callable $beforeOutput = null, callable $afterOutput = null, array $tableCollection = [])
     {
-        $data = $this->fileRepository->loadData($name);
-        $this->dbRepository->saveData($name, $data);
+        if( array_key_exists($tableName, $this->loadedFixtures)) {
+            return;
+        }
+        $deps = [];
+        $dataFixture = $this->fileRepository->loadData($tableName);
+
+        $deps = $dataFixture->deps();
+        $data = $dataFixture->run();
+
+        if($deps) {
+            foreach ($deps as $dep) {
+                $this->importTable($dep, $beforeOutput, $afterOutput, $tableCollection);
+            }
+        }
+
+        $beforeOutput($tableName);
+        $this->dbRepository->saveData($tableName, new Collection($data));
+        $afterOutput($tableName);
+        $this->loadedFixtures[$tableName] = true;
     }
 
     public function exportTable($name)

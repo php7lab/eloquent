@@ -11,6 +11,7 @@ use PhpLab\Core\Legacy\Yii\Helpers\ArrayHelper;
 use PhpLab\Core\Legacy\Yii\Helpers\FileHelper;
 use PhpLab\Core\Libs\Store\StoreFile;
 use PhpLab\Eloquent\Fixture\Entities\FixtureEntity;
+use PhpLab\Eloquent\Fixture\Libs\DataFixture;
 use PhpLab\Eloquent\Fixture\Traits\ConfigTrait;
 
 class FileRepository implements RepositoryInterface, GetEntityClassInterface
@@ -57,10 +58,17 @@ class FileRepository implements RepositoryInterface, GetEntityClassInterface
         $this->getStoreInstance($name)->save($data);
     }
 
-    public function loadData($name): Collection
+    public function loadData($name): DataFixture
     {
         $data = $this->getStoreInstance($name)->load();
-        return new Collection($data);
+        if(ArrayHelper::isAssociative($data)) {
+            return new DataFixture($data['collection'], $data['deps'] ?? []);
+        } elseif($data instanceof DataFixture) {
+            return $data;
+        } elseif (ArrayHelper::isIndexed($data)) {
+            return new DataFixture($data);
+        }
+        throw new \Exception('Bad fixture format of '.$name.'!');
     }
 
     private function oneByName(string $name): FixtureEntity
