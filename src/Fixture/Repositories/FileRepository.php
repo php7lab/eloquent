@@ -54,7 +54,11 @@ class FileRepository implements RepositoryInterface, GetEntityClassInterface
 
     public function saveData($name, Collection $collection)
     {
-        $data = ArrayHelper::toArray($collection);
+        $dataFixture = $this->loadData($name);
+
+        $data['deps'] = $dataFixture->deps();
+        $data['collection'] = ArrayHelper::toArray($collection->toArray());
+
         $this->getStoreInstance($name)->save($data);
     }
 
@@ -69,7 +73,7 @@ class FileRepository implements RepositoryInterface, GetEntityClassInterface
             return new DataFixture($data);
         }
 
-        dd($data);
+        //dd($data);
         throw new \Exception('Bad fixture format of '.$name.'!');
     }
 

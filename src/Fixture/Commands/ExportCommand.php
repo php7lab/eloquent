@@ -30,7 +30,8 @@ class ExportCommand extends BaseCommand
         $output->writeln('<fg=white># Fixture EXPORT</>');
 
         /** @var FixtureEntity[]|Collection $tableCollection */
-        $tableCollection = $this->fixtureService->allTables();
+        $tableCollection = $this->fixtureService->allFixtures();
+        //dd($tableCollection->toArray());
 
         if ($tableCollection->count() == 0) {
             $output->writeln('');
