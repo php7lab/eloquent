@@ -68,6 +68,8 @@ class FileRepository implements RepositoryInterface, GetEntityClassInterface
         } elseif (ArrayHelper::isIndexed($data)) {
             return new DataFixture($data);
         }
+
+        dd($data);
         throw new \Exception('Bad fixture format of '.$name.'!');
     }
 

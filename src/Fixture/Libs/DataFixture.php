@@ -14,8 +14,12 @@ class DataFixture
         $this->deps = $deps;
     }
 
-    public function run() {
+    public function load() {
         return $this->data;
+    }
+
+    public function unload() {
+
     }
 
     public function deps() {

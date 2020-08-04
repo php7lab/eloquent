@@ -56,13 +56,22 @@ class DbRepository extends BaseEloquentRepository
         $schema->drop($targetTableName);
     }
 
-    public function saveData($name, Collection $collection)
+    public function truncateData($name)
     {
         $tableAlias = $this->getCapsule()->getAlias();
         $targetTableName = $tableAlias->encode('default', $name);
         $connection = $this->getConnection();
         $queryBuilder = $connection->table($targetTableName);
         $queryBuilder->truncate();
+    }
+
+    public function saveData($name, Collection $collection)
+    {
+        $tableAlias = $this->getCapsule()->getAlias();
+        $targetTableName = $tableAlias->encode('default', $name);
+        $connection = $this->getConnection();
+        $queryBuilder = $connection->table($targetTableName);
+        //$queryBuilder->truncate();
         $chunks = $collection->chunk(150);
         foreach ($chunks as $chunk) {
             $data = ArrayHelper::toArray($chunk);

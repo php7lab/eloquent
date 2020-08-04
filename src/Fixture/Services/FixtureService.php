@@ -74,8 +74,10 @@ class FixtureService
         $deps = [];
         $dataFixture = $this->fileRepository->loadData($tableName);
 
+        $this->dbRepository->truncateData($tableName);
+
         $deps = $dataFixture->deps();
-        $data = $dataFixture->run();
+        $data = $dataFixture->load();
 
         if($deps) {
             foreach ($deps as $dep) {
@@ -84,7 +86,9 @@ class FixtureService
         }
 
         $beforeOutput($tableName);
-        $this->dbRepository->saveData($tableName, new Collection($data));
+        if($data) {
+            $this->dbRepository->saveData($tableName, new Collection($data));
+        }
         $afterOutput($tableName);
         $this->loadedFixtures[$tableName] = true;
     }
