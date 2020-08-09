@@ -85,11 +85,18 @@ class FixtureService
             }
         }
 
-        $beforeOutput($tableName);
+        if($beforeOutput) {
+            $beforeOutput($tableName);
+        }
+
         if($data) {
             $this->dbRepository->saveData($tableName, new Collection($data));
         }
-        $afterOutput($tableName);
+
+        if($afterOutput) {
+            $afterOutput($tableName);
+        }
+
         $this->loadedFixtures[$tableName] = true;
     }
 
