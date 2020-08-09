@@ -5,7 +5,6 @@ namespace PhpLab\Eloquent\Fixture\Services;
 use Illuminate\Support\Collection;
 use PhpLab\Core\Domain\Helpers\EntityHelper;
 use PhpLab\Eloquent\Fixture\Entities\FixtureEntity;
-use PhpLab\Eloquent\Fixture\Libs\DataFixture;
 use PhpLab\Eloquent\Fixture\Repositories\DbRepository;
 use PhpLab\Eloquent\Fixture\Repositories\FileRepository;
 use PhpLab\Eloquent\Migration\Repositories\HistoryRepository;

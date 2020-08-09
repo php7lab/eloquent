@@ -12,6 +12,7 @@ use PhpLab\Core\Legacy\Yii\Helpers\FileHelper;
 use PhpLab\Core\Libs\Store\StoreFile;
 use PhpLab\Eloquent\Fixture\Entities\FixtureEntity;
 use PhpLab\Eloquent\Fixture\Libs\DataFixture;
+use PhpLab\Eloquent\Fixture\Libs\FixtureInterface;
 use PhpLab\Eloquent\Fixture\Traits\ConfigTrait;
 
 class FileRepository implements RepositoryInterface, GetEntityClassInterface
@@ -62,12 +63,12 @@ class FileRepository implements RepositoryInterface, GetEntityClassInterface
         $this->getStoreInstance($name)->save($data);
     }
 
-    public function loadData($name): DataFixture
+    public function loadData($name): FixtureInterface
     {
         $data = $this->getStoreInstance($name)->load();
         if(ArrayHelper::isAssociative($data)) {
             return new DataFixture($data['collection'], $data['deps'] ?? []);
-        } elseif($data instanceof DataFixture) {
+        } elseif($data instanceof FixtureInterface) {
             return $data;
         } elseif (ArrayHelper::isIndexed($data)) {
             return new DataFixture($data);

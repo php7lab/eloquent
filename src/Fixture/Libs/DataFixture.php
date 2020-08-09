@@ -2,7 +2,7 @@
 
 namespace PhpLab\Eloquent\Fixture\Libs;
 
-class DataFixture
+class DataFixture implements FixtureInterface
 {
 
     private $data;
